@@ -16,13 +16,14 @@ CREATE TABLE
         title VARCHAR(255) NOT NULL,
         instructions VARCHAR(2000) NOT NULL,
         img VARCHAR(1000) NOT NULL,
-        category ENUM(
-            "Mexican",
-            "Italian",
-            "Thai",
-            "Indian",
-            "Chinese"
-        ) NOT NULL,
+        -- category ENUM(
+        --     "Mexican",
+        --     "Italian",
+        --     "Thai",
+        --     "Indian",
+        --     "Chinese"
+        -- ) NOT NULL,
+        category VARCHAR(255) NOT NULL,
         creatorId VARCHAR(255) NOT NULL,
         FOREIGN KEY (creatorId) REFERENCES accounts(id)
     ) default charset utf8 COMMENT '';
