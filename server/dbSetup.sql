@@ -16,16 +16,20 @@ CREATE TABLE
         title VARCHAR(255) NOT NULL,
         instructions VARCHAR(2000) NOT NULL,
         img VARCHAR(1000) NOT NULL,
-        -- category ENUM(
-        --     "Mexican",
-        --     "Italian",
-        --     "Thai",
-        --     "Indian",
-        --     "Chinese"
-        -- ) NOT NULL,
         category VARCHAR(255) NOT NULL,
         creatorId VARCHAR(255) NOT NULL,
-        FOREIGN KEY (creatorId) REFERENCES accounts(id)
+        FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
+    ) default charset utf8 COMMENT '';
+
+CREATE TABLE
+    IF NOT EXISTS ingredients(
+        id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
+        updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
+        name VARCHAR(255) NOT NULL,
+        quantity VARCHAR(255) NOT NULL,
+        recipeId INT NOT NULL,
+        FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE
     ) default charset utf8 COMMENT '';
 
 SELECT * FROM recipes;
@@ -59,3 +63,9 @@ SELECT reci.*, acc.*
 FROM recipes reci
     JOIN accounts acc ON reci.creatorId = acc.id
 WHERE reci.id = 1;
+
+INSERT INTO
+    ingredients (name, quantity, recipeId)
+VALUES ("paprika", "2 tsp", "2");
+
+SELECT * FROM ingredients WHERE id = 1;
