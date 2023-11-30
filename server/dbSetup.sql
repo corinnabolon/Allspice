@@ -54,3 +54,8 @@ FROM recipes reci
 WHERE reci.id = 1;
 
 DROP TABLE recipes;
+
+SELECT reci.*, acc.*
+FROM recipes reci
+    JOIN accounts acc ON reci.creatorId = acc.id
+WHERE reci.id = 1;
