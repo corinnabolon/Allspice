@@ -55,6 +55,20 @@ public class RecipesService
     return originalRecipe;
   }
 
+  internal string RemoveRecipe(int recipeId, string userId)
+  {
+    Recipe recipe = GetRecipeById(recipeId);
+
+    if (recipe.CreatorId != userId)
+    {
+      throw new Exception("Not your recipe to delete!");
+    }
+
+    _repository.RemoveRecipe(recipeId);
+
+    return $"Recipe with recipe Id {recipeId} has been deleted!";
+  }
+
 
 
 }

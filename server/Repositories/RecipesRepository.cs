@@ -78,14 +78,14 @@ WHERE reci.id = @recipeId;";
     instructions = @Instructions,
     img = @Img,
     category = @Category
-    WHERE id = @recipeId;
+    WHERE id = @Id;
     
     SELECT
     reci.*,
     acc.*
     FROM recipes reci
     JOIN accounts acc ON acc.id = reci.creatorId
-    WHERE reci.id = @recipeId;";
+    WHERE reci.id = @Id;";
 
     Recipe recipe = _db.Query<Recipe, Profile, Recipe>(sql, (recipe, profile) =>
     {
@@ -93,6 +93,13 @@ WHERE reci.id = @recipeId;";
       return recipe;
     }, recipeData).FirstOrDefault();
     return recipe;
+  }
+
+  internal void RemoveRecipe(int recipeId)
+  {
+    string sql = "DELETE FROM recipes WHERE id = @recipeId LIMIT 1;";
+
+    _db.Execute(sql, new { recipeId });
   }
 
 }
