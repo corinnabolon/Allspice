@@ -30,8 +30,23 @@ public class FavoritesController : ControllerBase
     {
       return BadRequest(e.Message);
     }
+  }
 
-
+  [Authorize]
+  [HttpDelete("{favoriteId}")]
+  public async Task<ActionResult<string>> RemoveFavorite(int favoriteId)
+  {
+    try
+    {
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      string userId = userInfo.Id;
+      string message = _favoritesService.RemoveFavorite(favoriteId, userId);
+      return Ok(message);
+    }
+    catch (Exception e)
+    {
+      return BadRequest(e.Message);
+    }
   }
 
 
