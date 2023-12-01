@@ -6,6 +6,9 @@
         <p @click="flipWantsMyRecipes()" role="button">My Recipes</p>
         <p @click="flipWantsFavorites()" role="button">Favorites</p>
       </div>
+      <div class="col-1 align-self-end">
+        <button data-bs-toggle="modal" data-bs-target="#createRecipeModal">Create Recipe</button>
+      </div>
     </section>
     <section v-if="recipes" class="row justify-content-center">
       <div v-for="recipe in recipes" :key="recipe.id" class="col-3 m-3" data-bs-toggle="modal"
@@ -43,9 +46,17 @@
               </div>
             </div>
           </section>
-
         </div>
       </section>
+    </template>
+  </ModalComponent>
+
+  <ModalComponent :modalId="'createRecipeModal'" :modalSize="'modal-md'">
+    <template #modalTitle>
+      <b>New Recipe</b>
+    </template>
+    <template #modalBody>
+      <NewRecipeForm />
     </template>
   </ModalComponent>
 </template>
@@ -60,6 +71,7 @@ import RecipeComponent from '../components/RecipeComponent.vue';
 import { accountService } from "../services/AccountService.js";
 import { logger } from "../utils/Logger.js";
 import ModalComponent from '../components/ModalComponent.vue';
+import NewRecipeForm from '../components/NewRecipeForm.vue';
 
 export default {
   setup() {
@@ -128,7 +140,7 @@ export default {
 
     }
   },
-  components: { RecipeComponent, ModalComponent }
+  components: { RecipeComponent, ModalComponent, NewRecipeForm }
 }
 </script>
 

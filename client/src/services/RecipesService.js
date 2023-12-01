@@ -25,6 +25,19 @@ class RecipesService {
     logger.log("Active recipe ingredients", AppState.activeRecipeIngredients)
   }
 
+  async createRecipe(recipeData) {
+    const res = await api.post("api/recipes", recipeData)
+    logger.log('CREATED Recipe', res.data)
+    let newRecipe = new Recipe(res.data)
+    AppState.recipes.push(newRecipe)
+    AppState.activeRecipe = newRecipe
+  }
+
+  clearAppState() {
+    AppState.activeRecipe = null
+    AppState.activeRecipeIngredients.length = 0
+  }
+
 
 }
 

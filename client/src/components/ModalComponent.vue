@@ -3,11 +3,11 @@
     <div class="modal-dialog" :class="modalSize">
       <div class="modal-content">
         <div class="modal-header">
-          <!-- <h1 class="modal-title fs-5" :id="modalId + 'Label'">
+          <h1 class="modal-title fs-5" :id="modalId + 'Label'">
 
             <slot name="modalTitle"></slot>
 
-          </h1> -->
+          </h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">

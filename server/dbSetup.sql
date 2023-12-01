@@ -14,7 +14,7 @@ CREATE TABLE
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
         updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
         title VARCHAR(255) NOT NULL,
-        instructions VARCHAR(2000) NOT NULL,
+        instructions VARCHAR(2000),
         img VARCHAR(1000) NOT NULL,
         category ENUM(
             "Cheese",
