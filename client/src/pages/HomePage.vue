@@ -6,8 +6,8 @@
         <p @click="flipWantsMyRecipes()" role="button">My Recipes</p>
         <p @click="flipWantsFavorites()" role="button">Favorites</p>
       </div>
-      <div class="col-1 align-self-end">
-        <button data-bs-toggle="modal" data-bs-target="#createRecipeModal">Create Recipe</button>
+      <div v-if="account.id" class="col-1 align-self-end">
+        <button data-bs-toggle="modal" data-bs-target="#createRecipeModal" class="btn btn-success">Create Recipe</button>
       </div>
     </section>
     <section v-if="recipes" class="row justify-content-center">
@@ -23,31 +23,7 @@
       <b v-if="activeRecipe">{{ activeRecipe.title }}</b>
     </template>
     <template #modalBody>
-      <section v-if="activeRecipe" class="row reci-card">
-        <div class="col-4">
-          <img :src="activeRecipe.img" class="reci-img">
-        </div>
-        <div class="col-8">
-          <section class="row">
-            <div class="col-12">
-              <div class="d-flex justify-content-around">
-                <p>{{ activeRecipe.title }}</p>
-                <p>{{ activeRecipe.category }}</p>
-              </div>
-            </div>
-            <div class="col-5">
-              <p>Recipe Instructions</p>
-              <p>{{ activeRecipe.instructions }}</p>
-            </div>
-            <div v-if="activeRecipeIngredients" class="col-5">
-              <p>Ingredients</p>
-              <div v-for="ingredient in activeRecipeIngredients" :key="ingredient.id">
-                <p>{{ ingredient.quantity }} {{ ingredient.name }}</p>
-              </div>
-            </div>
-          </section>
-        </div>
-      </section>
+      <RecipeDetailsComponent />
     </template>
   </ModalComponent>
 
@@ -72,6 +48,7 @@ import { accountService } from "../services/AccountService.js";
 import { logger } from "../utils/Logger.js";
 import ModalComponent from '../components/ModalComponent.vue';
 import NewRecipeForm from '../components/NewRecipeForm.vue';
+import RecipeDetailsComponent from '../components/RecipeDetailsComponent.vue';
 
 export default {
   setup() {
@@ -140,21 +117,11 @@ export default {
 
     }
   },
-  components: { RecipeComponent, ModalComponent, NewRecipeForm }
+  components: { RecipeComponent, ModalComponent, NewRecipeForm, RecipeDetailsComponent }
 }
 </script>
 
 <style scoped lang="scss">
-.reci-img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-}
-
-.reci-card {
-  height: 90vh;
-}
-
 .home {
   display: grid;
   height: 80vh;
