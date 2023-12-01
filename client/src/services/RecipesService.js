@@ -13,6 +13,10 @@ class RecipesService {
     logger.log("AppState Recipes", AppState.recipes)
   }
 
+  setActiveRecipe(recipeId) {
+    AppState.activeRecipe = AppState.recipes.filter(recipe => recipe.id == recipeId)
+  }
+
 
 }
 

@@ -12,7 +12,11 @@
         <RecipeComponent :recipeProp="recipe" />
       </div>
     </section>
+    <button data-bs-toggle="modal" data-bs-target="#modalOne" class="btn btn-outline-info">
+      Open First Modal
+    </button>
   </div>
+  <ModalComponent :modalId="'modalOne'"> </ModalComponent>
 </template>
 
 <script>
@@ -23,6 +27,7 @@ import { recipesService } from '../services/RecipesService.js';
 import RecipeComponent from '../components/RecipeComponent.vue';
 import { accountService } from "../services/AccountService.js";
 import { logger } from "../utils/Logger.js";
+import ModalComponent from '../components/ModalComponent.vue';
 
 export default {
   setup() {
@@ -43,7 +48,6 @@ export default {
     async function getRecipes() {
       try {
         await recipesService.getRecipes();
-        // logger.log("Test of filter", AppState.recipes.filter(recipe => recipe.creatorId != account.id))
       } catch (error) {
         Pop.error(error);
       }
@@ -85,11 +89,11 @@ export default {
       goHome() {
         wantsMyRecipes.value = false;
         wantsFavorites.value = false;
-      }
+      },
 
     }
   },
-  components: { RecipeComponent }
+  components: { RecipeComponent, ModalComponent }
 }
 </script>
 
