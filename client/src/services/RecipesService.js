@@ -1,8 +1,8 @@
 import { AppState } from "../AppState.js";
+import { Ingredient } from "../models/Ingredient.js";
 import { Recipe } from "../models/Recipe.js";
 import { logger } from "../utils/Logger.js";
 import { api } from "./AxiosService.js";
-
 
 class RecipesService {
 
@@ -15,6 +15,14 @@ class RecipesService {
 
   setActiveRecipe(recipeId) {
     AppState.activeRecipe = AppState.recipes.find(recipe => recipe.id == recipeId)
+    this.findIngredients()
+  }
+
+  async findIngredients() {
+    let recipeId = AppState.activeRecipe.id
+    const res = await api.get(`api/recipes/${recipeId}/ingredients`)
+    AppState.activeRecipeIngredients = res.data.map(pojo => new Ingredient(pojo))
+    logger.log("Active recipe ingredients", AppState.activeRecipeIngredients)
   }
 
 

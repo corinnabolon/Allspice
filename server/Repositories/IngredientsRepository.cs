@@ -35,18 +35,6 @@ public class IngredientsRepository
     return ingredients;
   }
 
-  // internal Ingredient GetIngredientById(int ingredientId)
-  // {
-  //   string sql = @"
-  //   SELECT
-  //   *
-  //   FROM ingredients
-  //   WHERE ingredients.id = @ingredientId;";
-
-  //   Ingredient ingredient = _db.Query<Ingredient>(sql, new { ingredientId }).FirstOrDefault();
-  //   return ingredient;
-  // }
-
   internal void RemoveIngredient(int ingredientId)
   {
     string sql = "DELETE FROM ingredients WHERE id = @ingredientId LIMIT 1;";

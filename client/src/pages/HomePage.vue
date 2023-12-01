@@ -24,14 +24,25 @@
         <div class="col-4">
           <img :src="activeRecipe.img" class="reci-img">
         </div>
-        <div class="col-4">
-          <div class="d-flex justify-content-around">
-            <p>{{ activeRecipe.title }}</p>
-            <p>{{ activeRecipe.category }}</p>
-          </div>
-          <div>
-            <p>{{ activeRecipe.instructions }}</p>
-          </div>
+        <div class="col-8">
+          <section class="row">
+            <div class="col-12">
+              <div class="d-flex justify-content-around">
+                <p>{{ activeRecipe.title }}</p>
+                <p>{{ activeRecipe.category }}</p>
+              </div>
+            </div>
+            <div class="col-5">
+              <p>Recipe Instructions</p>
+              <p>{{ activeRecipe.instructions }}</p>
+            </div>
+            <div v-if="activeRecipeIngredients" class="col-5">
+              <p>Ingredients</p>
+              <div v-for="ingredient in activeRecipeIngredients" :key="ingredient.id">
+                <p>{{ ingredient.quantity }} {{ ingredient.name }}</p>
+              </div>
+            </div>
+          </section>
 
         </div>
       </section>
@@ -89,6 +100,7 @@ export default {
       account,
 
       activeRecipe: computed(() => AppState.activeRecipe),
+      activeRecipeIngredients: computed(() => AppState.activeRecipeIngredients),
 
       recipes: computed(() => {
         if (wantsFavorites.value) {
