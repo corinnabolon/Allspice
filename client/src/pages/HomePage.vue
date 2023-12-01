@@ -8,16 +8,37 @@
       </div>
     </section>
     <section v-if="recipes" class="row justify-content-center">
-      <div v-for="recipe in recipes" :key="recipe.id" class="col-3 m-3">
+      <div v-for="recipe in recipes" :key="recipe.id" class="col-3 m-3" data-bs-toggle="modal"
+        data-bs-target="#recipeCardModal">
         <RecipeComponent :recipeProp="recipe" />
       </div>
     </section>
-    <button data-bs-toggle="modal" data-bs-target="#modalOne" class="btn btn-outline-info">
-      Open First Modal
-    </button>
   </div>
-  <ModalComponent :modalId="'modalOne'"> </ModalComponent>
+
+  <ModalComponent :modalId="'recipeCardModal'" :modalSize="'modal-xl'">
+    <template #modalTitle>
+      <b v-if="activeRecipe">{{ activeRecipe.title }}</b>
+    </template>
+    <template #modalBody>
+      <section v-if="activeRecipe" class="row reci-card">
+        <div class="col-4">
+          <img :src="activeRecipe.img" class="reci-img">
+        </div>
+        <div class="col-4">
+          <div class="d-flex justify-content-around">
+            <p>{{ activeRecipe.title }}</p>
+            <p>{{ activeRecipe.category }}</p>
+          </div>
+          <div>
+            <p>{{ activeRecipe.instructions }}</p>
+          </div>
+
+        </div>
+      </section>
+    </template>
+  </ModalComponent>
 </template>
+
 
 <script>
 import { computed, onMounted, watch, ref } from 'vue';
@@ -67,6 +88,8 @@ export default {
       wantsMyRecipes,
       account,
 
+      activeRecipe: computed(() => AppState.activeRecipe),
+
       recipes: computed(() => {
         if (wantsFavorites.value) {
           return AppState.myFavoriteRecipes
@@ -98,6 +121,16 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.reci-img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.reci-card {
+  height: 90vh;
+}
+
 .home {
   display: grid;
   height: 80vh;
