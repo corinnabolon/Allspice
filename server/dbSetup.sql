@@ -16,7 +16,13 @@ CREATE TABLE
         title VARCHAR(255) NOT NULL,
         instructions VARCHAR(2000) NOT NULL,
         img VARCHAR(1000) NOT NULL,
-        category VARCHAR(255) NOT NULL,
+        category ENUM(
+            "Cheese",
+            "Soup",
+            "Mexican",
+            "Italian",
+            "Specialty Coffee"
+        ) NOT NULL,
         creatorId VARCHAR(255) NOT NULL,
         FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
     ) default charset utf8 COMMENT '';
@@ -87,3 +93,7 @@ INSERT INTO
 VALUES ("paprika", "2 tsp", "2");
 
 SELECT * FROM ingredients WHERE id = 1;
+
+SELECT * FROM ingredients;
+
+SELECT * FROM favorites;
