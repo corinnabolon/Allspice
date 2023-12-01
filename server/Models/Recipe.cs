@@ -4,9 +4,9 @@ public class Recipe
 {
   public int Id { get; set; }
 
-  public DateTime createdAt { get; set; }
+  public DateTime CreatedAt { get; set; }
 
-  public DateTime updatedAt { get; set; }
+  public DateTime UpdatedAt { get; set; }
 
   public string Title { get; set; }
 
