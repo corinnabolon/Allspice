@@ -1,8 +1,8 @@
 export class Recipe {
   constructor(data) {
     this.id = data.id
-    this.createdAt = new Date(data.CreatedAt)
-    this.updatedAt = new Date(data.UpdatedAt)
+    this.createdAt = data.createdAt
+    this.updatedAt = data.updatedAt
     this.title = data.title
     this.instructions = data.instructions
     this.img = data.img

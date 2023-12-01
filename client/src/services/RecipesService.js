@@ -8,8 +8,9 @@ class RecipesService {
 
   async getRecipes() {
     const res = await api.get("api/recipes")
-    logger.log(res.data)
+    logger.log("Recipes from back end", res.data)
     AppState.recipes = res.data.map(recipePOJO => new Recipe(recipePOJO))
+    logger.log("AppState Recipes", AppState.recipes)
   }
 
 
