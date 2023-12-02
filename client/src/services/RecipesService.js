@@ -38,7 +38,6 @@ class RecipesService {
     if (!activeRecipe) {
       return
     }
-    //check the above
     logger.log("before adding", AppState.activeRecipe.instructions)
     AppState.activeRecipe.instructions = instructions
     logger.log("after adding", AppState.activeRecipe.instructions)

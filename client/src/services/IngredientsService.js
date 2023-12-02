@@ -20,6 +20,11 @@ class IngredientsService {
     recipesService.findIngredients()
   }
 
+  async removeIngredient(ingredientId) {
+    await api.delete(`api/ingredients/${ingredientId}`)
+    recipesService.findIngredients()
+  }
+
 }
 
 export const ingredientsService = new IngredientsService();

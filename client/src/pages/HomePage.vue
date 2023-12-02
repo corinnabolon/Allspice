@@ -35,6 +35,15 @@
       <NewRecipeForm />
     </template>
   </ModalComponent>
+
+  <ModalComponent :modalId="'deleteIngredientsModal'" :modalSize="'modal-sm'">
+    <template #modalTitle>
+      <b>Which ingredients would you like to delete?</b>
+    </template>
+    <template #modalBody>
+      <DeleteIngredientsComponent />
+    </template>
+  </ModalComponent>
 </template>
 
 
@@ -49,6 +58,7 @@ import { logger } from "../utils/Logger.js";
 import ModalComponent from '../components/ModalComponent.vue';
 import NewRecipeForm from '../components/NewRecipeForm.vue';
 import RecipeDetailsComponent from '../components/RecipeDetailsComponent.vue';
+import DeleteIngredientsComponent from '../components/DeleteIngredientsComponent.vue';
 
 export default {
   setup() {
@@ -117,7 +127,7 @@ export default {
 
     }
   },
-  components: { RecipeComponent, ModalComponent, NewRecipeForm, RecipeDetailsComponent }
+  components: { RecipeComponent, ModalComponent, NewRecipeForm, RecipeDetailsComponent, DeleteIngredientsComponent }
 }
 </script>
 

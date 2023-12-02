@@ -37,6 +37,8 @@
                 Ingredient</button>
               <button @click="flipEditIngredientsForm" class="btn btn-success">Edit
                 Ingredients</button>
+              <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#deleteIngredientsModal">Select
+                Ingredients to Delete</button>
             </div>
             <div v-else-if="addingIngredients && !editingIngredients" class="d-flex">
               <div>
@@ -51,7 +53,6 @@
               </div>
             </div>
             <div v-else>
-              <EditIngredientsForm />
               <form @submit.prevent="editIngredients()" id="edit-ingredients">
                 <div v-for="ingredient in activeRecipeIngredients" :key="ingredient.id">
                   <div class="d-flex">
@@ -102,7 +103,6 @@ import { logger } from "../utils/Logger.js";
 import Pop from "../utils/Pop.js";
 import { recipesService } from "../services/RecipesService.js"
 import { ingredientsService } from "../services/IngredientsService.js"
-import EditIngredientsForm from "../components/EditIngredientsForm.vue"
 
 
 export default {
@@ -209,8 +209,7 @@ export default {
 
 
     }
-  },
-  components: { EditIngredientsForm }
+  }
 };
 </script>
 
