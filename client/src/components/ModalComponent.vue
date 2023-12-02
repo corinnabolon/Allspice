@@ -8,8 +8,7 @@
             <slot name="modalTitle"></slot>
 
           </h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-            @click="clearData()"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
 
@@ -34,9 +33,6 @@ export default {
   },
   setup() {
     return {
-      clearData() {
-        recipesService.clearAppState()
-      }
     }
   }
 }

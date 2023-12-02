@@ -33,11 +33,24 @@ class RecipesService {
     AppState.activeRecipe = newRecipe
   }
 
+  async addInstructions(instructions) {
+    let activeRecipe = AppState.activeRecipe;
+    if (!activeRecipe) {
+      return
+    }
+    //check the above
+    logger.log("before adding", AppState.activeRecipe.instructions)
+    AppState.activeRecipe.instructions = instructions
+    logger.log("after adding", AppState.activeRecipe.instructions)
+    const res = await api.put(`api/recipes/${activeRecipe.id}`, activeRecipe)
+    logger.log('EDITED Recipe', res.data)
+    let updatedRecipe = new Recipe(res.data)
+    AppState.activeRecipe = updatedRecipe
+  }
+
   clearAppState() {
     AppState.activeRecipe = null
     AppState.activeRecipeIngredients.length = 0
-    AppState.addingInstructions = false
-    logger.log("Adding instructions set to false")
   }
 
 
