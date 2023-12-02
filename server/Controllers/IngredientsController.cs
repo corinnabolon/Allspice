@@ -46,6 +46,24 @@ public class IngredientsController : ControllerBase
     }
   }
 
+  // [Authorize]
+  // [HttpPost]
+
+  // public async Task<ActionResult<Ingredient>> CreateIngredient([FromBody] Ingredient ingredientData)
+  // {
+  //   try
+  //   {
+  //     Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+  //     ingredientData.CreatorId = userInfo.Id;
+  //     Ingredient ingredient = _ingredientsService.CreateIngredient(ingredientData);
+  //     return Ok(ingredient);
+  //   }
+  //   catch (Exception e)
+  //   {
+  //     return BadRequest(e.Message);
+  //   }
+  // }
+
   [Authorize]
   [HttpPut("{ingredientId}")]
   public async Task<ActionResult<Ingredient>> UpdateIngredient(int ingredientId, [FromBody] Ingredient ingredientData)

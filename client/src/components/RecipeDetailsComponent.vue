@@ -17,7 +17,7 @@
             <p>{{ activeRecipe.instructions }}</p>
           </div>
           <div v-else>
-            <form>
+            <form @submit.prevent="addInstructions()" id="add-instructions">
               <label for="recipeInstructions" class="form-label">Fill out instructions below:</label>
               <textarea v-model="editableInstructions" class="form-control" id="recipeInstructions"
                 aria-describedby="recipeInstructions" maxLength="1000" />
@@ -42,22 +42,26 @@
               <div>
                 <label for="name" class="form-label">Name of Ingredient</label>
                 <input v-model="editableIngredient.name" type="text" class="form-control" id="name" placeholder="Cinnamon"
-                  required maxLength="255">
+                  required maxLength="255" minLength="3">
               </div>
               <div>
                 <label for="quantity" class="form-label">Quantity of Ingredient</label>
                 <input v-model="editableIngredient.quantity" type="text" class="form-control" id="quantity"
-                  placeholder="1 tsp" required maxLength="255">
+                  placeholder="1 tsp" required maxLength="255" minLength="1">
               </div>
             </div>
             <div v-else>
               <EditIngredientsForm />
-              <div v-for="ingredient in activeRecipeIngredients" :key="ingredient.id">
-                <div class="d-flex">
-                  <input v-model="ingredient.quantity" :placeholder="ingredient.quantity">
-                  <input v-model="ingredient.name">
+              <form @submit.prevent="editIngredients()" id="edit-ingredients">
+                <div v-for="ingredient in activeRecipeIngredients" :key="ingredient.id">
+                  <div class="d-flex">
+                    <input v-model="ingredient.quantity" type="text" class="form-control" id="name" required
+                      maxLength="255" minLength="1">
+                    <input v-model="ingredient.name" type="text" class="form-control" id="name" required maxLength="255"
+                      minLength="3">
+                  </div>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
           <div v-if="addingIngredients" class="d-flex">
@@ -66,7 +70,7 @@
           </div>
           <div v-else-if="editingIngredients" class="d-flex">
             <button @click="reloadEditableIngredients" class="btn btn-danger">Cancel Changes</button>
-            <button @click="editIngredients" class="btn btn-success">Edit Ingredients</button>
+            <button type="submit" form="edit-ingredients" class="btn btn-success">Edit Ingredients</button>
           </div>
         </div>
       </section>
@@ -82,7 +86,7 @@
           </div>
           <div v-if="addingInstructions" class="d-flex">
             <button @click="reloadEditableInstructions" class="btn btn-danger">Cancel Changes</button>
-            <button @click="addInstructions" class="btn btn-success">Submit Changes</button>
+            <button class="btn btn-success" type="submit" form="add-instructions">Submit Changes</button>
           </div>
         </div>
       </section>
@@ -190,8 +194,10 @@ export default {
 
       async editIngredients() {
         try {
+          logger.log("Editing?")
           let ingredients = editableIngredients.value
           await ingredientsService.editIngredients(ingredients)
+          editingIngredients.value = false
           editableIngredients.value = []
           Pop.success("Ingredients edited!")
         } catch (error) {
