@@ -26,13 +26,19 @@
         </div>
         <div class="col-5">
           <p v-if="activeRecipeIngredients.length">Ingredients</p>
-          <div v-for="ingredient in activeRecipeIngredients" :key="ingredient.id">
-            <p>{{ ingredient.quantity }} {{ ingredient.name }}</p>
+          <div v-if="!editingIngredients">
+            <div v-for="ingredient in activeRecipeIngredients" :key="ingredient.id">
+              <p>{{ ingredient.quantity }} {{ ingredient.name }}</p>
+            </div>
           </div>
           <div>
-            <button v-if="!addingIngredients" @click="flipIngredientTextarea" class="btn btn-success">Add an
-              Ingredient</button>
-            <div v-else class="d-flex">
+            <div v-if="!addingIngredients && !editingIngredients">
+              <button @click="flipIngredientTextarea" class="btn btn-success">Add an
+                Ingredient</button>
+              <button @click="flipEditIngredientsForm" class="btn btn-success">Edit
+                Ingredients</button>
+            </div>
+            <div v-else-if="addingIngredients && !editingIngredients" class="d-flex">
               <div>
                 <label for="name" class="form-label">Name of Ingredient</label>
                 <input v-model="editableIngredient.name" type="text" class="form-control" id="name" placeholder="Cinnamon"
@@ -44,9 +50,22 @@
                   placeholder="1 tsp" required maxLength="255">
               </div>
             </div>
+            <div v-else>
+              <EditIngredientsForm />
+              <div v-for="ingredient in activeRecipeIngredients" :key="ingredient.id">
+                <div class="d-flex">
+                  <input v-model="ingredient.quantity" :placeholder="ingredient.quantity">
+                  <input v-model="ingredient.name">
+                </div>
+              </div>
+            </div>
           </div>
           <div v-if="addingIngredients" class="d-flex">
             <button @click="flipIngredientTextarea" class="btn btn-danger">Finished</button>
+            <button @click="addIngredient" class="btn btn-success">Add Ingredient</button>
+          </div>
+          <div v-else-if="editingIngredients" class="d-flex">
+            <button @click="reloadEditableIngredients" class="btn btn-danger">Cancel Changes</button>
             <button @click="addIngredient" class="btn btn-success">Add Ingredient</button>
           </div>
         </div>
@@ -79,14 +98,17 @@ import { logger } from "../utils/Logger.js";
 import Pop from "../utils/Pop.js";
 import { recipesService } from "../services/RecipesService.js"
 import { ingredientsService } from "../services/IngredientsService.js"
+import EditIngredientsForm from "../components/EditIngredientsForm.vue"
 
 
 export default {
   setup() {
     let addingInstructions = ref(false);
     let addingIngredients = ref(false);
+    let editingIngredients = ref(false);
     let editableInstructions = ref("")
     let editableIngredient = ref({})
+    let editableIngredients = ref([])
 
     watchEffect(() => {
       if (AppState.activeRecipe) {
@@ -100,13 +122,18 @@ export default {
       else {
         editableInstructions.value = ""
       }
+      if (AppState.activeRecipeIngredients.length) {
+        editableIngredients.value = [...AppState.activeRecipeIngredients];
+      }
     })
 
     return {
       editableInstructions,
       editableIngredient,
+      editableIngredients,
       addingInstructions,
       addingIngredients,
+      editingIngredients,
       activeRecipe: computed(() => AppState.activeRecipe),
       activeRecipeIngredients: computed(() => AppState.activeRecipeIngredients),
 
@@ -118,9 +145,24 @@ export default {
         addingIngredients.value = !addingIngredients.value;
       },
 
+      flipEditIngredientsForm() {
+        editingIngredients.value = !editingIngredients.value;
+      },
+
       reloadEditableInstructions() {
         this.flipInstructionTextarea()
         editableInstructions.value = (AppState.activeRecipe.instructions)
+      },
+
+      async reloadEditableIngredients() {
+        try {
+          this.flipEditIngredientsForm()
+          await recipesService.findIngredients();
+          //I had to make this async and add the previous line because otherwise it kept changing the array in the AppState...
+          editableIngredients.value = [...AppState.activeRecipeIngredients];
+        } catch (error) {
+          Pop.error(error)
+        }
       },
 
       async addInstructions() {
@@ -146,9 +188,23 @@ export default {
         }
       },
 
+      async editIngredients() {
+        try {
+          let ingredients = editableIngredients.value
+          await ingredientsService.editIngredients(ingredients)
+          editableIngredients.value = []
+          Pop.success("Ingredients edited!")
+        } catch (error) {
+          Pop.error(error)
+        }
+      }
+
+
+
 
     }
-  }
+  },
+  components: { EditIngredientsForm }
 };
 </script>
 

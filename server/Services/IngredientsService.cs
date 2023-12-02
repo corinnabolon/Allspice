@@ -1,5 +1,6 @@
 
 
+
 namespace Allspice.Services;
 
 public class IngredientsService
@@ -24,19 +25,32 @@ public class IngredientsService
     return (ingredients);
   }
 
-  // internal Ingredient GetIngredientById(int ingredientId)
-  // {
-  //   Ingredient ingredient = _repository.GetIngredientsByRecipeId(ingredientId);
-  //   if (ingredient == null)
-  //   {
-  //     throw new Exception($"No ingredient with the id {ingredientId}");
-  //   }
-  //   return ingredient;
-  // }
+  internal Ingredient GetIngredientById(int ingredientId)
+  {
+    Ingredient ingredient = _repository.GetIngredientById(ingredientId);
+    if (ingredient == null)
+    {
+      throw new Exception($"No ingredient with the id {ingredientId}");
+    }
+    return ingredient;
+  }
 
   internal string RemoveIngredient(int ingredientId)
   {
     _repository.RemoveIngredient(ingredientId);
     return "Ingredient was deleted!";
   }
+
+  internal Ingredient UpdateIngredient(string userId, int ingredientId, Ingredient ingredientData)
+  {
+    Ingredient originalIngredient = GetIngredientById(ingredientId);
+
+    originalIngredient.Name = ingredientData.Name ?? originalIngredient.Name;
+    originalIngredient.Quantity = ingredientData.Quantity ?? originalIngredient.Quantity;
+
+    _repository.UpdateIngredient(ingredientId, originalIngredient);
+
+    return originalIngredient;
+  }
+
 }

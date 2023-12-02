@@ -12,6 +12,10 @@ class IngredientsService {
     recipesService.findIngredients()
   }
 
+  async editIngredients(ingredients) {
+
+  }
+
 }
 
 export const ingredientsService = new IngredientsService();
