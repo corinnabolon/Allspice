@@ -25,19 +25,20 @@
           </div>
         </div>
         <div class="col-5">
-          <p v-if="activeRecipeIngredients.length">Ingredients</p>
+          <p>Ingredients</p>
           <div v-if="!editingIngredients">
             <div v-for="ingredient in activeRecipeIngredients" :key="ingredient.id">
               <p>{{ ingredient.quantity }} {{ ingredient.name }}</p>
             </div>
           </div>
-          <div>
+          <div v-if="account.id == activeRecipe.creatorId">
             <div v-if="!addingIngredients && !editingIngredients">
               <button @click="flipIngredientTextarea" class="btn btn-success">Add an
                 Ingredient</button>
-              <button @click="flipEditIngredientsForm" class="btn btn-success">Edit
+              <button v-if="activeRecipeIngredients.length" @click="flipEditIngredientsForm" class="btn btn-success">Edit
                 Ingredients</button>
-              <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#deleteIngredientsModal">Select
+              <button v-if="activeRecipeIngredients.length" class="btn btn-success" data-bs-toggle="modal"
+                data-bs-target="#deleteIngredientsModal">Select
                 Ingredients to Delete</button>
             </div>
             <div v-else-if="addingIngredients && !editingIngredients" class="d-flex">
@@ -77,7 +78,7 @@
       </section>
       <section class="row">
         <div class="col-5">
-          <div>
+          <div v-if="account.id == activeRecipe.creatorId">
             <button v-if="!addingInstructions && !editableInstructions" @click="flipInstructionTextarea"
               class="btn btn-success">Add
               Instructions</button>
@@ -138,6 +139,7 @@ export default {
       addingInstructions,
       addingIngredients,
       editingIngredients,
+      account: computed(() => AppState.account),
       activeRecipe: computed(() => AppState.activeRecipe),
       activeRecipeIngredients: computed(() => AppState.activeRecipeIngredients),
 

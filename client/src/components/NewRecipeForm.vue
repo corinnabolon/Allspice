@@ -49,6 +49,7 @@ export default {
         try {
           let recipeData = editable.value
           await recipesService.createRecipe(recipeData)
+          Pop.success("Recipe created! Now add the instructions and ingredients.")
           editable.value = {}
           Modal.getOrCreateInstance('#createRecipeModal').hide()
           Modal.getOrCreateInstance('#recipeCardModal').show()

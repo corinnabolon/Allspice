@@ -9,20 +9,22 @@ class IngredientsService {
     ingredient.recipeId = AppState.activeRecipe.id
     logger.log(ingredient)
     const res = await api.post("api/ingredients", ingredient)
-    recipesService.findIngredients()
+    AppState.activeRecipeIngredients.push(new Ingredient(res.data))
   }
 
   async editIngredients(ingredients) {
     logger.log("ingredients", ingredients)
     for (const ingredient of ingredients) {
       await api.put(`api/ingredients/${ingredient.id}`, ingredient)
+      let index = AppState.activeRecipeIngredients.findIndex(ingredient)
+      AppState.activeRecipeIngredients.splice(index, 1, ingredient)
     }
-    recipesService.findIngredients()
   }
 
   async removeIngredient(ingredientId) {
     await api.delete(`api/ingredients/${ingredientId}`)
-    recipesService.findIngredients()
+    AppState.activeRecipeIngredients = AppState.activeRecipeIngredients.filter(
+      (ingredient) => ingredient.id != ingredientId)
   }
 
 }
