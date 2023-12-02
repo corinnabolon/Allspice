@@ -66,7 +66,7 @@
           </div>
           <div v-else-if="editingIngredients" class="d-flex">
             <button @click="reloadEditableIngredients" class="btn btn-danger">Cancel Changes</button>
-            <button @click="addIngredient" class="btn btn-success">Add Ingredient</button>
+            <button @click="editIngredients" class="btn btn-success">Edit Ingredients</button>
           </div>
         </div>
       </section>
@@ -158,7 +158,7 @@ export default {
         try {
           this.flipEditIngredientsForm()
           await recipesService.findIngredients();
-          //I had to make this async and add the previous line because otherwise it kept changing the array in the AppState...
+          //I had to make this async and add the previous line because otherwise it kept changing the array in the AppState and I couldn't re-load the original one...
           editableIngredients.value = [...AppState.activeRecipeIngredients];
         } catch (error) {
           Pop.error(error)

@@ -13,7 +13,11 @@ class IngredientsService {
   }
 
   async editIngredients(ingredients) {
-
+    logger.log("ingredients", ingredients)
+    for (const ingredient of ingredients) {
+      await api.put(`api/ingredients/${ingredient.id}`, ingredient)
+    }
+    recipesService.findIngredients()
   }
 
 }
