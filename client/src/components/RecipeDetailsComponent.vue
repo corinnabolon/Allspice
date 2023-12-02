@@ -13,7 +13,16 @@
         </div>
         <div class="col-5">
           <p>Recipe Instructions</p>
-          <p>{{ activeRecipe.instructions }}</p>
+          <div v-if="!addingInstructions">
+            <p>{{ activeRecipe.instructions }}</p>
+          </div>
+          <div v-else>
+            <form>
+              <label for="recipeInstructions" class="form-label">Fill out instructions below:</label>
+              <textarea v-model="editable" class="form-control" id="recipeInstructions"
+                aria-describedby="recipeInstructions" maxLength="1000" />
+            </form>
+          </div>
         </div>
         <div v-if="activeRecipeIngredients" class="col-5">
           <p>Ingredients</p>
@@ -24,7 +33,16 @@
       </section>
       <section class="row">
         <div class="col-5">
-          <button class="btn btn-success">Add Instructions</button>
+          <div>
+            <button v-if="!addingInstructions && !editable" @click="flipInstructionTextarea" class="btn btn-success">Add
+              Instructions</button>
+            <button v-if="!addingInstructions && editable" @click="flipInstructionTextarea" class="btn btn-success">Edit
+              Instructions</button>
+          </div>
+          <div v-if="addingInstructions" class="d-flex">
+            <button @click="flipInstructionTextarea" class="btn btn-danger">Cancel Changes</button>
+            <button class="btn btn-success">Submit Changes</button>
+          </div>
         </div>
       </section>
     </div>
@@ -34,11 +52,38 @@
 
 <script>
 import { AppState } from '../AppState';
-import { computed, reactive, onMounted } from 'vue';
+import { computed, reactive, onMounted, ref, watchEffect } from 'vue';
+import { logger } from "../utils/Logger.js";
+
+
 export default {
   setup() {
+    let addingInstructions = ref(false);
+    let editable = ref("")
+
+    watchEffect(() => {
+      if (AppState.activeRecipe) {
+        if (AppState.activeRecipe.instructions) {
+          editable.value = (AppState.activeRecipe.instructions)
+          logger.log('WATCH')
+        } else {
+          editable.value = ""
+        }
+      }
+      else {
+        editable.value = ""
+      }
+    })
+
     return {
+      editable,
+      addingInstructions,
       activeRecipe: computed(() => AppState.activeRecipe),
+      activeRecipeIngredients: computed(() => AppState.activeRecipeIngredients),
+
+      flipInstructionTextarea() {
+        addingInstructions.value = !addingInstructions.value;
+      }
     }
   }
 };

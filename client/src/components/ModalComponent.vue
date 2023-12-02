@@ -8,7 +8,8 @@
             <slot name="modalTitle"></slot>
 
           </h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            @click="clearData()"></button>
         </div>
         <div class="modal-body">
 
@@ -22,6 +23,8 @@
 
 
 <script>
+import { recipesService } from "../services/RecipesService.js";
+
 
 
 export default {
@@ -31,6 +34,9 @@ export default {
   },
   setup() {
     return {
+      clearData() {
+        recipesService.clearAppState()
+      }
     }
   }
 }

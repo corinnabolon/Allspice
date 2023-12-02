@@ -36,6 +36,8 @@ class RecipesService {
   clearAppState() {
     AppState.activeRecipe = null
     AppState.activeRecipeIngredients.length = 0
+    AppState.addingInstructions = false
+    logger.log("Adding instructions set to false")
   }
 
 
