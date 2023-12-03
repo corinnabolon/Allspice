@@ -17,9 +17,9 @@ class AccountService {
 
   async getMyFavoritedRecipes() {
     const res = await api.get("/account/favorites")
-    logger.log("My favorites", res.data)
+    logger.log("From AccountService, My favorites", res.data)
     AppState.myFavoriteRecipes = res.data.map(POJO => new FavoritedRecipe(POJO))
-    logger.log("Favorite Recipes", AppState.myFavoriteRecipes)
+    logger.log("Favorite Recipes, AppState.myFavoriteRecipes", AppState.myFavoriteRecipes)
   }
 }
 

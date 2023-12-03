@@ -11,8 +11,7 @@
       </div>
     </section>
     <section v-if="recipes" class="row justify-content-evenly">
-      <div v-for="recipe in recipes" :key="recipe.id" class="col-3 m-2" data-bs-toggle="modal"
-        data-bs-target="#recipeCardModal">
+      <div v-for="recipe in recipes" :key="recipe.id" class="col-3 m-2">
         <RecipeComponent :recipeProp="recipe" />
       </div>
     </section>
@@ -86,6 +85,7 @@ export default {
 
     async function getFavoritedRecipes() {
       try {
+        logger.log("Get favorited recipes triggered")
         await accountService.getMyFavoritedRecipes();
       } catch (error) {
         Pop.error(error);

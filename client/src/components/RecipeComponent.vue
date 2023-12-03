@@ -1,8 +1,8 @@
 <template>
-  <div @click="setActiveRecipe(recipeProp.id)" role="button">
+  <div @click="setActiveRecipe(recipeProp.id)">
     <div class="recipeCard-coverImg">
       <section class="row d-flex justify-content-between px-2">
-        <div class="col-6 fs-5">
+        <div class="col-6 fs-5" data-bs-toggle="modal" data-bs-target="#recipeCardModal">
           <p class="recipeCard-words rounded-pill text-center mt-2">
             {{ recipeProp.category }}
           </p>
@@ -15,7 +15,7 @@
           </p>
         </div>
       </section>
-      <section class="row">
+      <section class="row" data-bs-toggle="modal" data-bs-target="#recipeCardModal">
         <div class="col-10">
           <span class="d-flex align-items-center justify-content-center title-box position-end recipeCard-words rounded">
             <p class="fs-5 m-1">{{ recipeProp.title }}</p>
