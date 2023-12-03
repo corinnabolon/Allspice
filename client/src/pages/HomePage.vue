@@ -10,8 +10,8 @@
         <button data-bs-toggle="modal" data-bs-target="#createRecipeModal" class="btn btn-success">Create Recipe</button>
       </div>
     </section>
-    <section v-if="recipes" class="row justify-content-center">
-      <div v-for="recipe in recipes" :key="recipe.id" class="col-3 m-3" data-bs-toggle="modal"
+    <section v-if="recipes" class="row justify-content-evenly">
+      <div v-for="recipe in recipes" :key="recipe.id" class="col-3 m-2" data-bs-toggle="modal"
         data-bs-target="#recipeCardModal">
         <RecipeComponent :recipeProp="recipe" />
       </div>

@@ -5,6 +5,7 @@
           ingredient.name
         }}</p>
   </div>
+  <button class="btn btn-danger" @click="goBack()" aria-label="Close">Go Back</button>
 </template>
 
 
@@ -35,8 +36,13 @@ export default {
         } catch (error) {
           Pop.error(error)
         }
+      },
 
+      goBack() {
+        Modal.getOrCreateInstance('#deleteIngredientsModal').hide()
+        Modal.getOrCreateInstance('#recipeCardModal').show()
       }
+
     }
   }
 };
