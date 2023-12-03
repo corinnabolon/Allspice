@@ -17,15 +17,14 @@ class FavoritesService {
   }
 
   async deleteFavorite(recipeId) {
-    let favoriteToDelete = myFavorites.find(favorite => favorite.recipeId == recipeId)
+    let favoriteToDelete = AppState.myFavoriteRecipes.find(favorite => favorite.id == recipeId)
     if (!favoriteToDelete) {
       return
     }
-    let unfavoriteId = recipeToUnfavorite.id
-    logger.log("unfavoriteId", unfavoriteId)
-    // const res = await api.delete(`api/favorites/${unfavoriteId}`)
-    let unfavorited = res.data
-    logger.log("unfavorited", unfavorited)
+    let favoriteId = favoriteToDelete.favoriteId
+    const res = await api.delete(`api/favorites/${favoriteId}`)
+    let index = AppState.myFavoriteRecipes.findIndex(favorite => favorite.id == recipeId)
+    AppState.myFavoriteRecipes.splice(index, 1)
   }
 
 

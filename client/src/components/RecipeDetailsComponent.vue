@@ -119,7 +119,6 @@ export default {
       if (AppState.activeRecipe) {
         if (AppState.activeRecipe.instructions) {
           editableInstructions.value = (AppState.activeRecipe.instructions)
-          logger.log('WATCH')
         } else {
           editableInstructions.value = ""
         }
@@ -185,7 +184,6 @@ export default {
       async addIngredient() {
         try {
           let ingredient = editableIngredient.value
-          logger.log(ingredient)
           await ingredientsService.addIngredient(ingredient)
           editableIngredient.value = {}
           Pop.success("Ingredient added!")
@@ -196,7 +194,6 @@ export default {
 
       async editIngredients() {
         try {
-          logger.log("Editing?")
           let ingredients = editableIngredients.value
           await ingredientsService.editIngredients(ingredients)
           editingIngredients.value = false

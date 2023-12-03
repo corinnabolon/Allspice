@@ -8,9 +8,7 @@ class RecipesService {
 
   async getRecipes() {
     const res = await api.get("api/recipes")
-    logger.log("Recipes from back end", res.data)
     AppState.recipes = res.data.map(recipePOJO => new Recipe(recipePOJO))
-    logger.log("AppState Recipes", AppState.recipes)
   }
 
   setActiveRecipe(recipeId) {
@@ -22,12 +20,10 @@ class RecipesService {
     let recipeId = AppState.activeRecipe.id
     const res = await api.get(`api/recipes/${recipeId}/ingredients`)
     AppState.activeRecipeIngredients = res.data.map(pojo => new Ingredient(pojo))
-    logger.log("Active recipe ingredients", AppState.activeRecipeIngredients)
   }
 
   async createRecipe(recipeData) {
     const res = await api.post("api/recipes", recipeData)
-    logger.log('CREATED Recipe', res.data)
     let newRecipe = new Recipe(res.data)
     AppState.recipes.push(newRecipe)
     AppState.activeRecipe = newRecipe
@@ -38,11 +34,8 @@ class RecipesService {
     if (!activeRecipe) {
       return
     }
-    logger.log("before adding", AppState.activeRecipe.instructions)
     AppState.activeRecipe.instructions = instructions
-    logger.log("after adding", AppState.activeRecipe.instructions)
     const res = await api.put(`api/recipes/${activeRecipe.id}`, activeRecipe)
-    logger.log('EDITED Recipe', res.data)
     let updatedRecipe = new Recipe(res.data)
     AppState.activeRecipe = updatedRecipe
   }

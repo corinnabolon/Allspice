@@ -9,7 +9,8 @@
         </div>
         <div class="col-2">
           <p class="recipeCard-words rounded text-center fs-3">
-            <i v-if="isFavRecipe" @click="deleteFavorite(recipeProp.id)" role="button" class="mdi mdi-heart text-danger"></i>
+            <i v-if="isFavRecipe" @click="deleteFavorite(recipeProp.id)" role="button"
+              class="mdi mdi-heart text-danger"></i>
             <i v-else @click="createFavorite(recipeProp.id)" role="button" class="mdi mdi-heart-outline"></i>
           </p>
         </div>
@@ -47,7 +48,6 @@ export default {
       setActiveRecipe(recipeId) {
         logger.log("Recipe ID", recipeId)
         recipesService.setActiveRecipe(recipeId);
-        logger.log("AppState.activeRecipe", AppState.activeRecipe)
       },
 
       async createFavorite(recipeId) {

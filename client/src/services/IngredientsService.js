@@ -7,7 +7,6 @@ class IngredientsService {
 
   async addIngredient(ingredient) {
     ingredient.recipeId = AppState.activeRecipe.id
-    logger.log(ingredient)
     const res = await api.post("api/ingredients", ingredient)
     AppState.activeRecipeIngredients.push(new Ingredient(res.data))
   }
