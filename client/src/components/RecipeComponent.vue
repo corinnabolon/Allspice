@@ -8,8 +8,8 @@
           </p>
         </div>
         <div class="col-2">
-          <p class="recipeCard-words rounded text-center fs-3">
-            <i v-if="isFavRecipe" @click.stop="deleteFavorite(recipeProp.id)" role="button"
+          <p class="recipeCard-words rounded-bottom text-center fs-3">
+            <i v-if="isFavRecipe" @click.stop="removeFavorite(recipeProp.id)" role="button"
               class="mdi mdi-heart text-danger" title="Unfavorite this recipe"></i>
             <i v-else @click.stop="createFavorite(recipeProp.id)" role="button" class="mdi mdi-heart-outline"
               title="Favorite this recipe"></i>
@@ -61,9 +61,9 @@ export default {
         }
       },
 
-      async deleteFavorite(recipeId) {
+      async removeFavorite(recipeId) {
         try {
-          await favoritesService.deleteFavorite(recipeId)
+          await favoritesService.removeFavorite(recipeId)
           Pop.success("You have unfavorited this recipe.")
         } catch (error) {
           Pop.error(error)

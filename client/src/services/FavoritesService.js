@@ -10,18 +10,6 @@ import { api } from "./AxiosService.js"
 
 class FavoritesService {
 
-  // async createFavorite(recipeId) {
-  //   const res = await api.post("api/favorites", { recipeId })
-  //   logger.log('Favorited recipe', res.data)
-  //   // let newFavorite = new Favorite(res.data)
-  //   // let favoritedRecipe = AppState.recipes.find(recipe => recipe.id == newFavorite.recipeId)
-  //   // AppState.myFavoriteRecipes.push(favoritedRecipe)
-  //   let newFavoritdRecipe = new FavoritedRecipe(res.data)
-  //   logger.log("Favorited recipe as a FavoritedRecipe", newFavoritdRecipe)
-  //   let foundRecipe = AppState.recipes.find(recipe => recipe.id == newFavoritdRecipe.id)
-  //   AppState.myFavoriteRecipes.push(foundRecipe)
-  // }
-
   async createFavorite(recipeId) {
     let foundRecipe = AppState.recipes.find(recipe => recipe.id == recipeId)
     logger.log("Found recipe", foundRecipe)
@@ -38,7 +26,7 @@ class FavoritesService {
     logger.log("AppState.myFavoritedRecipes", AppState.myFavoriteRecipes)
   }
 
-  async deleteFavorite(recipeId) {
+  async removeFavorite(recipeId) {
     let favoriteToDelete = AppState.myFavoriteRecipes.find(favorite => favorite.id == recipeId)
     if (!favoriteToDelete) {
       return

@@ -1,7 +1,19 @@
 <template>
   <section v-if="activeRecipe" class="row reci-card">
-    <div class="col-4">
+    <div class="col-4 position-relative">
       <img :src="activeRecipe.img" class="reci-img">
+      <div>
+        <div v-if="account.id == activeRecipe.creatorId">
+          <button @click="removeRecipe(activeRecipe.id)" class="btn btn-danger delete-recipe-button">Delete
+            Recipe</button>
+        </div>
+        <p class="recipeCard-words rounded-bottom text-center fs-3 px-1">
+          <i v-if="isFavRecipe" @click.stop="removeFavorite(activeRecipe.id)" role="button"
+            class="mdi mdi-heart text-danger" title="Unfavorite this recipe"></i>
+          <i v-else @click.stop="createFavorite(activeRecipe.id)" role="button" class="mdi mdi-heart-outline"
+            title="Favorite this recipe"></i>
+        </p>
+      </div>
     </div>
     <div class="col-8">
       <section class="row">
@@ -20,7 +32,7 @@
             <form @submit.prevent="addInstructions()" id="add-instructions">
               <label for="recipeInstructions" class="form-label">Fill out instructions below:</label>
               <textarea v-model="editableInstructions" class="form-control" id="recipeInstructions"
-                aria-describedby="recipeInstructions" maxLength="1000" />
+                aria-describedby="recipeInstructions" minlength="3" maxlength="1000" />
             </form>
           </div>
         </div>
@@ -45,12 +57,12 @@
               <div>
                 <label for="name" class="form-label">Name of Ingredient</label>
                 <input v-model="editableIngredient.name" type="text" class="form-control" id="name" placeholder="Cinnamon"
-                  required maxLength="255" minLength="3">
+                  required maxlength="255" minlength="3">
               </div>
               <div>
                 <label for="quantity" class="form-label">Quantity of Ingredient</label>
                 <input v-model="editableIngredient.quantity" type="text" class="form-control" id="quantity"
-                  placeholder="1 tsp" required maxLength="255" minLength="1">
+                  placeholder="1 tsp" required maxlength="255" minlength="1">
               </div>
             </div>
             <div v-else>
@@ -104,6 +116,7 @@ import { logger } from "../utils/Logger.js";
 import Pop from "../utils/Pop.js";
 import { recipesService } from "../services/RecipesService.js"
 import { ingredientsService } from "../services/IngredientsService.js"
+import { favoritesService } from "../services/FavoritesService.js";
 
 
 export default {
@@ -141,6 +154,7 @@ export default {
       account: computed(() => AppState.account),
       activeRecipe: computed(() => AppState.activeRecipe),
       activeRecipeIngredients: computed(() => AppState.activeRecipeIngredients),
+      isFavRecipe: computed(() => AppState.myFavoriteRecipes.find((recipe) => recipe.id == AppState.activeRecipe.id)),
 
       flipInstructionTextarea() {
         addingInstructions.value = !addingInstructions.value;
@@ -202,6 +216,38 @@ export default {
         } catch (error) {
           Pop.error(error)
         }
+      },
+
+      async createFavorite(recipeId) {
+        try {
+          await favoritesService.createFavorite(recipeId)
+          Pop.success("You have favorited this recipe.")
+        } catch (error) {
+          Pop.error(error)
+        }
+      },
+
+      async removeFavorite(recipeId) {
+        try {
+          await favoritesService.removeFavorite(recipeId)
+          Pop.success("You have unfavorited this recipe.")
+        } catch (error) {
+          Pop.error(error)
+        }
+      },
+
+      async removeRecipe(recipeId) {
+        try {
+          let wantsToDelete = await Pop.confirm("Are you sure you want to delete this recipe?")
+          if (!wantsToDelete) {
+            return
+          }
+          await recipesService.removeRecipe(recipeId)
+          Pop.success("Recipe deleted.")
+          Modal.getOrCreateInstance('#recipeCardModal').hide()
+        } catch (error) {
+          Pop.error(error)
+        }
       }
 
 
@@ -215,12 +261,27 @@ export default {
 
 <style lang="scss" scoped>
 .reci-img {
-  height: 100%;
+  height: 28rem;
   width: 100%;
   object-fit: cover;
 }
 
 .reci-card {
   height: 100%;
+}
+
+.recipeCard-words {
+  position: absolute;
+  background-color: rgba(82, 69, 69, 0.12);
+  backdrop-filter: blur(13px);
+  font-weight: bold;
+  left: 82%;
+  top: 0%;
+}
+
+.delete-recipe-button {
+  position: absolute;
+  left: 5%;
+  top: 90%;
 }
 </style>

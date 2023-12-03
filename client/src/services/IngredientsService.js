@@ -1,7 +1,9 @@
 import { AppState } from '../AppState';
+import { Ingredient } from "../models/Ingredient.js";
 import { recipesService } from "../services/RecipesService.js"
 import { logger } from "../utils/Logger.js";
 import { api } from "./AxiosService.js";
+
 
 class IngredientsService {
 
@@ -15,8 +17,6 @@ class IngredientsService {
     logger.log("ingredients", ingredients)
     for (const ingredient of ingredients) {
       await api.put(`api/ingredients/${ingredient.id}`, ingredient)
-      let index = AppState.activeRecipeIngredients.findIndex(ingredient)
-      AppState.activeRecipeIngredients.splice(index, 1, ingredient)
     }
   }
 
