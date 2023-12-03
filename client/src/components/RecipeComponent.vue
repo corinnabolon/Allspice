@@ -1,21 +1,22 @@
 <template>
   <div @click="setActiveRecipe(recipeProp.id)">
-    <div class="recipeCard-coverImg">
+    <div class="recipeCard-coverImg" @click="openModal" role="button" title="See recipe details">
       <section class="row d-flex justify-content-between px-2">
-        <div class="col-6 fs-5" data-bs-toggle="modal" data-bs-target="#recipeCardModal">
+        <div class="col-6 fs-5">
           <p class="recipeCard-words rounded-pill text-center mt-2">
             {{ recipeProp.category }}
           </p>
         </div>
         <div class="col-2">
           <p class="recipeCard-words rounded text-center fs-3">
-            <i v-if="isFavRecipe" @click="deleteFavorite(recipeProp.id)" role="button"
-              class="mdi mdi-heart text-danger"></i>
-            <i v-else @click="createFavorite(recipeProp.id)" role="button" class="mdi mdi-heart-outline"></i>
+            <i v-if="isFavRecipe" @click.stop="deleteFavorite(recipeProp.id)" role="button"
+              class="mdi mdi-heart text-danger" title="Unfavorite this recipe"></i>
+            <i v-else @click.stop="createFavorite(recipeProp.id)" role="button" class="mdi mdi-heart-outline"
+              title="Favorite this recipe"></i>
           </p>
         </div>
       </section>
-      <section class="row" data-bs-toggle="modal" data-bs-target="#recipeCardModal">
+      <section class="row">
         <div class="col-10">
           <span class="d-flex align-items-center justify-content-center title-box position-end recipeCard-words rounded">
             <p class="fs-5 m-1">{{ recipeProp.title }}</p>
@@ -35,6 +36,7 @@ import { logger } from "../utils/Logger.js";
 import { recipesService } from '../services/RecipesService.js';
 import Pop from "../utils/Pop.js";
 import { favoritesService } from "../services/FavoritesService.js";
+import { Modal } from "bootstrap";
 
 
 export default {
@@ -66,7 +68,10 @@ export default {
         } catch (error) {
           Pop.error(error)
         }
+      },
 
+      openModal() {
+        Modal.getOrCreateInstance('#recipeCardModal').show();
       }
 
 
