@@ -117,6 +117,7 @@ import Pop from "../utils/Pop.js";
 import { recipesService } from "../services/RecipesService.js"
 import { ingredientsService } from "../services/IngredientsService.js"
 import { favoritesService } from "../services/FavoritesService.js";
+import { Modal } from "bootstrap";
 
 
 export default {

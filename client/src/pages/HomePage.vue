@@ -1,16 +1,13 @@
 <template>
   <div class="container-fluid">
-    <section class="row justify-content-center">
+    <!-- <section class="row justify-content-center">
       <div class="col-6 d-flex justify-content-around">
         <p @click="goHome()" role="button">Home</p>
         <p @click="flipWantsMyRecipes()" role="button">My Recipes</p>
         <p @click="flipWantsFavorites()" role="button">Favorites</p>
       </div>
-      <div v-if="account.id" class="col-1 align-self-end">
-        <button data-bs-toggle="modal" data-bs-target="#createRecipeModal" class="btn btn-success">Create Recipe</button>
-      </div>
-    </section>
-    <section v-if="recipes" class="row justify-content-evenly">
+    </section> -->
+    <section v-if="recipes" class="row justify-content-evenly large-margin-top">
       <div v-for="recipe in recipes" :key="recipe.id" class="col-3 m-2">
         <RecipeComponent :recipeProp="recipe" />
       </div>
@@ -62,8 +59,10 @@ import DeleteIngredientsComponent from '../components/DeleteIngredientsComponent
 export default {
   setup() {
     let account = computed(() => AppState.account)
-    let wantsFavorites = ref(false)
-    let wantsMyRecipes = ref(false)
+    // let wantsFavorites = ref(false)
+    // let wantsMyRecipes = ref(false)
+    let wantsFavorites = ref(AppState.wantsFavorites)
+    let wantsMyRecipes = ref(AppState.wantsMyRecipes)
 
     onMounted(() => {
       getRecipes();
@@ -101,10 +100,19 @@ export default {
       activeRecipe: computed(() => AppState.activeRecipe),
       activeRecipeIngredients: computed(() => AppState.activeRecipeIngredients),
 
+      // recipes: computed(() => {
+      //   if (wantsFavorites.value) {
+      //     return AppState.myFavoriteRecipes
+      //   } else if (wantsMyRecipes.value) {
+      //     return AppState.recipes.filter(recipe => recipe.creatorId == AppState.account.id)
+      //   }
+      //   return AppState.recipes
+      // }),
+
       recipes: computed(() => {
-        if (wantsFavorites.value) {
+        if (AppState.wantsFavorites) {
           return AppState.myFavoriteRecipes
-        } else if (wantsMyRecipes.value) {
+        } else if (AppState.wantsMyRecipes) {
           return AppState.recipes.filter(recipe => recipe.creatorId == AppState.account.id)
         }
         return AppState.recipes
@@ -132,6 +140,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.large-margin-top {
+  margin-top: 6rem;
+}
+
 .home {
   display: grid;
   height: 80vh;
