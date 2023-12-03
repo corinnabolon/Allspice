@@ -1,5 +1,6 @@
 import { AppState } from '../AppState'
 import { Account } from '../models/Account.js'
+import { FavoritedRecipe } from "../models/FavoritedRecipe.js"
 import { Recipe } from "../models/Recipe.js"
 import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
@@ -17,7 +18,7 @@ class AccountService {
   async getMyFavoritedRecipes() {
     const res = await api.get("/account/favorites")
     logger.log("My favorites", res.data)
-    AppState.myFavoriteRecipes = res.data.map(POJO => new Recipe(POJO))
+    AppState.myFavoriteRecipes = res.data.map(POJO => new FavoritedRecipe(POJO))
     logger.log("Favorite Recipes", AppState.myFavoriteRecipes)
   }
 }

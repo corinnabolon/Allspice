@@ -1,8 +1,7 @@
 <template>
   <div @click="setActiveRecipe(recipeProp.id)" role="button">
     <div class="recipeCard-coverImg">
-      <section class="row d-flex justify-content-between">
-        <!-- <img :src="recipeProp.img" alt="recipe image" class="recipe-img"> -->
+      <section class="row d-flex justify-content-between px-2">
         <div class="col-6 fs-5">
           <p class="recipeCard-words rounded-pill text-center mt-2">
             {{ recipeProp.category }}
@@ -10,7 +9,8 @@
         </div>
         <div class="col-2">
           <p class="recipeCard-words rounded text-center fs-3">
-            <i class="mdi mdi-heart"></i>
+            <i v-if="isFavRecipe" @click="deleteFavorite(recipeProp.id)" role="button" class="mdi mdi-heart text-danger"></i>
+            <i v-else @click="createFavorite(recipeProp.id)" role="button" class="mdi mdi-heart-outline"></i>
           </p>
         </div>
       </section>
@@ -32,6 +32,8 @@ import { computed, reactive, onMounted } from 'vue';
 import { Recipe } from "../models/Recipe.js";
 import { logger } from "../utils/Logger.js";
 import { recipesService } from '../services/RecipesService.js';
+import Pop from "../utils/Pop.js";
+import { favoritesService } from "../services/FavoritesService.js";
 
 
 export default {
@@ -40,12 +42,31 @@ export default {
   setup(props) {
     return {
       recipeCoverImg: computed(() => `url(${props.recipeProp.img})`),
-      myFavoriteRecipes: computed(() => AppState.myFavoriteRecipes),
+      isFavRecipe: computed(() => AppState.myFavoriteRecipes.find((recipe) => recipe.id == props.recipeProp.id)),
 
       setActiveRecipe(recipeId) {
         logger.log("Recipe ID", recipeId)
         recipesService.setActiveRecipe(recipeId);
         logger.log("AppState.activeRecipe", AppState.activeRecipe)
+      },
+
+      async createFavorite(recipeId) {
+        try {
+          await favoritesService.createFavorite(recipeId)
+          Pop.success("You have favorited this recipe.")
+        } catch (error) {
+          Pop.error(error)
+        }
+      },
+
+      async deleteFavorite(recipeId) {
+        try {
+          await favoritesService.deleteFavorite(recipeId)
+          Pop.success("You have unfavorited this recipe.")
+        } catch (error) {
+          Pop.error(error)
+        }
+
       }
 
 
@@ -56,12 +77,6 @@ export default {
 
 
 <style lang="scss" scoped>
-// .recipe-img {
-//   height: 30vh;
-//   width: 20vw;
-//   object-fit: cover;
-// }
-
 .recipeCard-coverImg {
   position: relative;
   background-image: v-bind(recipeCoverImg);
