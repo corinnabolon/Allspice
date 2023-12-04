@@ -1,20 +1,29 @@
 
 
 
+using System.Runtime.CompilerServices;
+
 namespace Allspice.Services;
 
 public class IngredientsService
 {
 
   private readonly IngredientsRepository _repository;
+  private readonly RecipesService _recipesService;
 
-  public IngredientsService(IngredientsRepository repository)
+  public IngredientsService(IngredientsRepository repository, RecipesService recipesService)
   {
     _repository = repository;
+    _recipesService = recipesService;
   }
 
-  internal Ingredient CreateIngredient(Ingredient ingredientData)
+  internal Ingredient CreateIngredient(Ingredient ingredientData, string userId)
   {
+    Recipe recipe = _recipesService.GetRecipeById(ingredientData.RecipeId);
+    if (recipe.CreatorId != userId)
+    {
+      throw new Exception("This is not your recipe, so you can't create ingredients for it.");
+    }
     Ingredient ingredient = _repository.CreateIngredient(ingredientData);
     return ingredient;
   }
@@ -35,8 +44,13 @@ public class IngredientsService
     return ingredient;
   }
 
-  internal string RemoveIngredient(int ingredientId)
+  internal string RemoveIngredient(int ingredientId, string userId)
   {
+    Ingredient ingredient = GetIngredientById(ingredientId);
+    if (ingredient.CreatorId != userId)
+    {
+      throw new Exception("Not your ingredient to delete!");
+    }
     _repository.RemoveIngredient(ingredientId);
     return "Ingredient was deleted!";
   }
@@ -44,6 +58,11 @@ public class IngredientsService
   internal Ingredient UpdateIngredient(string userId, int ingredientId, Ingredient ingredientData)
   {
     Ingredient originalIngredient = GetIngredientById(ingredientId);
+
+    if (originalIngredient.CreatorId != userId)
+    {
+      throw new Exception("Not your ingredient to delete!");
+    }
 
     originalIngredient.Name = ingredientData.Name ?? originalIngredient.Name;
     originalIngredient.Quantity = ingredientData.Quantity ?? originalIngredient.Quantity;

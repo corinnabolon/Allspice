@@ -14,4 +14,5 @@ public class Ingredient
 
   public int RecipeId { get; set; }
 
+  public string CreatorId { get; set; }
 }

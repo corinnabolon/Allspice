@@ -84,7 +84,6 @@ export default {
 
     async function getFavoritedRecipes() {
       try {
-        logger.log("Get favorited recipes triggered")
         await accountService.getMyFavoritedRecipes();
       } catch (error) {
         Pop.error(error);

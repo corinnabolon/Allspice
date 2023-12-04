@@ -1,3 +1,5 @@
+-- Active: 1701191390666@@SG-harsh-omelet-6782-8000-mysql-master.servers.mongodirector.com@3306@FirstDatabase
+
 CREATE TABLE
     IF NOT EXISTS accounts(
         id VARCHAR(255) NOT NULL primary key COMMENT 'primary key',
@@ -35,6 +37,8 @@ CREATE TABLE
         name VARCHAR(255) NOT NULL,
         quantity VARCHAR(255) NOT NULL,
         recipeId INT NOT NULL,
+        creatorId VARCHAR(255) NOT NULL,
+        FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE,
         FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE
     ) default charset utf8 COMMENT '';
 
