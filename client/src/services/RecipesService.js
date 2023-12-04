@@ -19,7 +19,9 @@ class RecipesService {
   async findIngredients() {
     let recipeId = AppState.activeRecipe.id
     const res = await api.get(`api/recipes/${recipeId}/ingredients`)
+    logger.log("Do I run?", res.data)
     AppState.activeRecipeIngredients = res.data.map(pojo => new Ingredient(pojo))
+    logger.log("Do I run? activeRecipeIngredients", AppState.activeRecipeIngredients)
   }
 
   async createRecipe(recipeData) {

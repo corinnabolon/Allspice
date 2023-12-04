@@ -39,7 +39,7 @@
         <div class="col-5">
           <p>Ingredients</p>
           <div v-if="!editingIngredients">
-            <div v-for="ingredient in activeRecipeIngredients" :key="ingredient.id">
+            <div v-for="ingredient in editableIngredients" :key="ingredient.id">
               <p>{{ ingredient.quantity }} {{ ingredient.name }}</p>
             </div>
           </div>
@@ -47,6 +47,7 @@
             <div v-if="!addingIngredients && !editingIngredients">
               <button @click="flipIngredientTextarea" class="btn btn-success">Add an
                 Ingredient</button>
+              <!-- //TODO change the bottom 2 conditions -->
               <button v-if="activeRecipeIngredients.length" @click="flipEditIngredientsForm" class="btn btn-success">Edit
                 Ingredients</button>
               <button v-if="activeRecipeIngredients.length" class="btn btn-success" data-bs-toggle="modal"
@@ -133,6 +134,8 @@ export default {
       let recipeCardModalElem = document.getElementById('recipeCardModal')
       recipeCardModalElem.addEventListener('hidden.bs.modal', function (event) {
         resetAll()
+        recipesService.clearAppState()
+        editableIngredients.value = JSON.parse(JSON.stringify(AppState.activeRecipeIngredients));
       })
     })
 
@@ -223,7 +226,6 @@ export default {
           let ingredients = editableIngredients.value
           await ingredientsService.editIngredients(ingredients)
           editingIngredients.value = false
-          editableIngredients.value = []
           Pop.success("Ingredients edited!")
         } catch (error) {
           Pop.error(error)
