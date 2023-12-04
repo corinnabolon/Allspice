@@ -67,7 +67,7 @@
             </div>
             <div v-else>
               <form @submit.prevent="editIngredients()" id="edit-ingredients">
-                <div v-for="ingredient in activeRecipeIngredients" :key="ingredient.id">
+                <div v-for="ingredient in editableIngredients" :key="ingredient.id">
                   <div class="d-flex">
                     <input v-model="ingredient.quantity" type="text" class="form-control" id="name" required
                       maxLength="255" minLength="1">
@@ -129,6 +129,13 @@ export default {
     let editableIngredient = ref({})
     let editableIngredients = ref([])
 
+    onMounted(() => {
+      let recipeCardModalElem = document.getElementById('recipeCardModal')
+      recipeCardModalElem.addEventListener('hidden.bs.modal', function (event) {
+        resetAll()
+      })
+    })
+
     watchEffect(() => {
       if (AppState.activeRecipe) {
         if (AppState.activeRecipe.instructions) {
@@ -141,9 +148,15 @@ export default {
         editableInstructions.value = ""
       }
       if (AppState.activeRecipeIngredients.length) {
-        editableIngredients.value = [...AppState.activeRecipeIngredients];
+        editableIngredients.value = JSON.parse(JSON.stringify(AppState.activeRecipeIngredients));
       }
     })
+
+    function resetAll() {
+      addingInstructions.value = false
+      addingIngredients.value = false
+      editingIngredients.value = false
+    }
 
     return {
       editableInstructions,
@@ -174,12 +187,10 @@ export default {
         editableInstructions.value = (AppState.activeRecipe.instructions)
       },
 
-      async reloadEditableIngredients() {
+      reloadEditableIngredients() {
         try {
           this.flipEditIngredientsForm()
-          await recipesService.findIngredients();
-          //I had to make this async and add the previous line because otherwise it kept changing the array in the AppState and I couldn't re-load the original one...
-          editableIngredients.value = [...AppState.activeRecipeIngredients];
+          editableIngredients.value = JSON.parse(JSON.stringify(AppState.activeRecipeIngredients));
         } catch (error) {
           Pop.error(error)
         }
