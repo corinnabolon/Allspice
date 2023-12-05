@@ -86,6 +86,25 @@ footer {
   color: var(--theme-pink);
 }
 
+//The below theme not working?
+.btn-theme-green:disabled {
+  background-color: var(--theme-pink);
+  border: 1px solid var(--theme-peach);
+  color: var(--theme-green);
+}
+
+.btn-theme-orange {
+  background-color: var(--theme-orange);
+  border: 1px solid var(--theme-peach);
+  color: var(--theme-green);
+}
+
+.btn-theme-orange:hover {
+  background-color: firebrick;
+  border: 1px solid var(--theme-orange);
+  color: var(--theme-pink);
+}
+
 .serif-font {
   font-family: 'DM Serif Display', serif;
 }

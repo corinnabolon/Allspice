@@ -17,8 +17,10 @@
         <input v-model="editable.img" type="text" class="form-control" id="title" placeholder="Image URL..." required
           maxLength="1000">
       </div>
-      <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Close</button>
-      <button type="submit" class="btn btn-success">Submit</button>
+      <div class="d-flex justify-content-end mt-3">
+        <button type="button" class="btn btn-theme-orange me-3" data-bs-dismiss="modal" aria-label="Close">Close</button>
+        <button type="submit" class="btn btn-theme-green">Submit</button>
+      </div>
     </form>
   </div>
 </template>
@@ -30,10 +32,20 @@ import { computed, reactive, onMounted, ref } from 'vue';
 import Pop from "../utils/Pop.js";
 import { recipesService } from "../services/RecipesService.js";
 import { Modal } from "bootstrap";
+import { logger } from "../utils/Logger.js";
 
 export default {
   setup() {
     const editable = ref({})
+
+    //TODO figure out why the below isn't working
+    onMounted(() => {
+      let deleteIngredientsModalElem = document.getElementById('deleteIngredientsModal')
+      deleteIngredientsModalElem.addEventListener('hidden.bs.modal', function (event) {
+        logger.log("Onmounted")
+        editable.value = {}
+      })
+    })
 
     return {
       editable,

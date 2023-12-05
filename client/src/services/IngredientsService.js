@@ -14,12 +14,13 @@ class IngredientsService {
   }
 
   async editIngredients(ingredients) {
-    logger.log("ingredients", ingredients)
+    AppState.ingredientsAreHidden = true
     AppState.activeRecipeIngredients.length = 0
     for (const ingredient of ingredients) {
       const res = await api.put(`api/ingredients/${ingredient.id}`, ingredient)
       AppState.activeRecipeIngredients.push(new Ingredient(ingredient))
     }
+    AppState.ingredientsAreHidden = false
   }
 
   async removeIngredient(ingredientId) {

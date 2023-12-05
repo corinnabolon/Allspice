@@ -16,7 +16,8 @@
 
   <ModalComponent :modalId="'recipeCardModal'" :modalSize="'modal-xl'">
     <template #modalTitle>
-      <b v-if="activeRecipe">{{ activeRecipe.title }}</b>
+      <p v-if="activeRecipe" class="serif-font fs-2">
+        {{ activeRecipe.title }}</p>
     </template>
     <template #modalBody>
       <RecipeDetailsComponent />

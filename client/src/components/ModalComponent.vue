@@ -2,13 +2,13 @@
   <div class="modal fade" :id="modalId" tabindex="-1" :aria-labelledby="modalId + 'Label'" aria-hidden="true">
     <div class="modal-dialog" :class="modalSize">
       <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" :id="modalId + 'Label'">
+        <div class="modal-header mb-0 pb-0 d-flex align-items-center">
+          <p class="mb-0" :id="modalId + 'Label'">
 
             <slot name="modalTitle"></slot>
 
-          </h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </p>
+          <button type="button" class="btn-close mb-0" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
 

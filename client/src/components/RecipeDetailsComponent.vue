@@ -18,9 +18,8 @@
     <div class="col-8">
       <section class="row">
         <div class="col-12">
-          <div class="d-flex justify-content-around">
-            <p>{{ activeRecipe.title }}</p>
-            <p>{{ activeRecipe.category }}</p>
+          <div class="d-flex justify-content-end serif-font fs-4">
+            <p class="bg-theme-green text-theme-pink px-3 rounded-pill">{{ activeRecipe.category }}</p>
           </div>
         </div>
         <div class="col-5">
@@ -38,7 +37,7 @@
         </div>
         <div class="col-5">
           <p>Ingredients</p>
-          <div v-if="!editingIngredients">
+          <div v-if="!editingIngredients && !ingredientsAreHidden">
             <div v-for="ingredient in activeRecipeIngredients" :key="ingredient.id">
               <p>{{ ingredient.quantity }} {{ ingredient.name }}</p>
             </div>
@@ -171,6 +170,7 @@ export default {
       addingInstructions,
       addingIngredients,
       editingIngredients,
+      ingredientsAreHidden: computed(() => AppState.ingredientsAreHidden),
       account: computed(() => AppState.account),
       activeRecipe: computed(() => AppState.activeRecipe),
       activeRecipeIngredients: computed(() => AppState.activeRecipeIngredients),
