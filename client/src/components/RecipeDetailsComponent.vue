@@ -23,23 +23,23 @@
           </div>
         </div>
         <div class="col-5 px-3">
-          <p>Recipe Instructions</p>
+          <p class="serif-font fs-4">Recipe Instructions</p>
           <div v-if="!addingInstructions">
-            <p>{{ activeRecipe.instructions }}</p>
+            <p class="serif-font">{{ activeRecipe.instructions }}</p>
           </div>
           <div v-else>
             <form @submit.prevent="addInstructions()" id="add-instructions">
-              <label for="recipeInstructions" class="form-label">Fill out instructions below:</label>
+              <label for="recipeInstructions" class="form-label serif-font fs-5">Fill out instructions below:</label>
               <textarea v-model="editableInstructions" class="form-control" id="recipeInstructions"
                 aria-describedby="recipeInstructions" minlength="3" maxlength="1000" />
             </form>
           </div>
         </div>
         <div class="col-5 px-3">
-          <p>Ingredients</p>
+          <p class="serif-font fs-4">Ingredients</p>
           <div v-if="!editingIngredients && !ingredientsAreHidden">
             <div v-for="ingredient in activeRecipeIngredients" :key="ingredient.id">
-              <p>{{ ingredient.quantity }} {{ ingredient.name }}</p>
+              <p class="serif-font fs-5">・{{ ingredient.quantity }} {{ ingredient.name }}</p>
             </div>
           </div>
         </div>
@@ -74,28 +74,42 @@
                   Ingredients to Delete</button>
               </div>
             </div>
-            <div v-else-if="addingIngredients && !editingIngredients" class="d-flex">
-              <div>
-                <label for="name" class="form-label">Name of Ingredient</label>
+            <div v-else-if="addingIngredients && !editingIngredients" class="d-flex mb-3 row">
+              <div class="col-5">
+                <label for="name" class="form-label">
+                  <p class="serif-font mb-0">Name of Ingredient</p>
+                </label>
                 <input v-model="editableIngredient.name" type="text" class="form-control" id="name" placeholder="Cinnamon"
                   required maxlength="255" minlength="3">
               </div>
-              <div>
-                <label for="quantity" class="form-label">Quantity of Ingredient</label>
+              <div class="col-6">
+                <label for="quantity" class="form-label">
+                  <p class="serif-font mb-0">Quantity of Ingredient</p>
+                </label>
                 <input v-model="editableIngredient.quantity" type="text" class="form-control" id="quantity"
                   placeholder="1 tsp" required maxlength="255" minlength="1">
               </div>
             </div>
             <div v-else>
               <form @submit.prevent="editIngredients()" id="edit-ingredients">
-                <div class="d-flex">
-                  <label for="name" class="form-label">Name of Ingredient</label>
-                  <label for="quantity" class="form-label">Quantity of Ingredient</label>
+                <div class="row">
+                  <div class="col-5">
+                    <label for="name" class="form-label">
+                      <p class="serif-font mb-0">Name of Ingredient</p>
+                    </label>
+                  </div>
+                  <div class="col-6">
+                    <label for="quantity" class="form-label">
+                      <p class="serif-font mb-0">Quantity of Ingredient</p>
+                    </label>
+                  </div>
                 </div>
-                <div v-for="ingredient in editableIngredients" :key="ingredient.id">
-                  <div class="d-flex">
+                <div v-for="ingredient in editableIngredients" :key="ingredient.id" class="row mb-2">
+                  <div class="col-5">
                     <input v-model="ingredient.name" type="text" class="form-control" id="name" required maxLength="255"
                       minLength="3">
+                  </div>
+                  <div class="col-6">
                     <input v-model="ingredient.quantity" type="text" class="form-control" id="name" required
                       maxLength="255" minLength="1">
                   </div>
@@ -104,7 +118,7 @@
             </div>
           </div>
           <div v-if="addingIngredients" class="d-flex">
-            <button @click="flipIngredientTextarea" class="btn btn-danger">Finished</button>
+            <button @click="flipIngredientTextarea" class="btn btn-theme-orange me-2">Finished</button>
             <button @click="addIngredient" class="btn btn-theme-green fs-5">Add Ingredient</button>
           </div>
           <div v-else-if="editingIngredients" class="d-flex">
@@ -283,6 +297,14 @@ export default {
 
 
 <style lang="scss" scoped>
+textarea {
+  height: 35vh;
+}
+
+input {
+  width: 11rem;
+}
+
 .reci-img {
   height: 28rem;
   width: 100%;

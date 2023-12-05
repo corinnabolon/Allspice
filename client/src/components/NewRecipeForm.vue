@@ -1,19 +1,25 @@
 <template>
   <div>
     <form @submit.prevent="createRecipe">
-      <div>
-        <label for="title" class="form-label">Title</label>
+      <div class="mb-3">
+        <label for="title" class="form-label">
+          <p class="serif-font fs-5 mb-0">Title</p>
+        </label>
         <input v-model="editable.title" type="text" class="form-control" id="title" placeholder="Title..." required
           maxLength="255">
       </div>
       <div class="mb-3">
-        <label for="category" class="form-label">Category</label>
+        <label for="category" class="form-label">
+          <p class="serif-font fs-5 mb-0">Category</p>
+        </label>
         <select v-model="editable.category" class="form-select" aria-label="Default select example" required>
           <option v-for="category in categories" :key="categories" :value="category">{{ category }}</option>
         </select>
       </div>
       <div>
-        <label for="img" class="form-label">Image URL</label>
+        <label for="img" class="form-label">
+          <p class="serif-font fs-5 mb-0">Image URL</p>
+        </label>
         <input v-model="editable.img" type="text" class="form-control" id="title" placeholder="Image URL..." required
           maxLength="1000">
       </div>

@@ -8,7 +8,7 @@
       </div>
     </section> -->
     <section v-if="recipes" class="row justify-content-evenly large-margin-top">
-      <div v-for="recipe in recipes" :key="recipe.id" class="col-3 m-2">
+      <div v-for="recipe in recipes" :key="recipe.id" class="col-3 m-2 recipe-component">
         <RecipeComponent :recipeProp="recipe" />
       </div>
     </section>
@@ -26,16 +26,16 @@
 
   <ModalComponent :modalId="'createRecipeModal'" :modalSize="'modal-md'">
     <template #modalTitle>
-      <b>New Recipe</b>
+      <p class="serif-font fs-3">New Recipe</p>
     </template>
     <template #modalBody>
       <NewRecipeForm />
     </template>
   </ModalComponent>
 
-  <ModalComponent :modalId="'deleteIngredientsModal'" :modalSize="'modal-sm'">
+  <ModalComponent :modalId="'deleteIngredientsModal'" :modalSize="'modal-md'">
     <template #modalTitle>
-      <b>Which ingredients would you like to delete?</b>
+      <p class="serif-font fs-5">Which ingredients would you like to delete?</p>
     </template>
     <template #modalBody>
       <DeleteIngredientsComponent />
@@ -140,6 +140,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.recipe-component:hover {
+  transform: scale(1.03);
+  transition: all 0.15s linear;
+}
+
 .large-margin-top {
   margin-top: 6rem;
 }
