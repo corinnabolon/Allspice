@@ -94,15 +94,14 @@ footer {
 }
 
 .btn-theme-orange {
-  background-color: var(--theme-orange);
-  border: 1px solid var(--theme-peach);
-  color: var(--theme-green);
+  background-color: firebrick;
+  border: 1px solid var(--theme-pink);
+  color: var(--theme-pink);
 }
 
 .btn-theme-orange:hover {
-  background-color: firebrick;
-  border: 1px solid var(--theme-orange);
-  color: var(--theme-pink);
+  background-color: var(--theme-orange);
+  border: 1px solid var(--theme-peach);
 }
 
 .serif-font {

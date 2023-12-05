@@ -4,7 +4,7 @@
       <img :src="activeRecipe.img" class="reci-img">
       <div>
         <div v-if="account.id == activeRecipe.creatorId">
-          <button @click="removeRecipe(activeRecipe.id)" class="btn btn-danger delete-recipe-button">Delete
+          <button @click="removeRecipe(activeRecipe.id)" class="btn btn-theme-orange delete-recipe-button">Delete
             Recipe</button>
         </div>
         <p class="recipeCard-words rounded-bottom text-center fs-3 px-1">
@@ -15,14 +15,14 @@
         </p>
       </div>
     </div>
-    <div class="col-8">
+    <div class="col-8 d-flex flex-column justify-content-between">
       <section class="row">
         <div class="col-12">
           <div class="d-flex justify-content-end serif-font fs-4">
             <p class="bg-theme-green text-theme-pink px-3 rounded-pill">{{ activeRecipe.category }}</p>
           </div>
         </div>
-        <div class="col-5">
+        <div class="col-5 px-3">
           <p>Recipe Instructions</p>
           <div v-if="!addingInstructions">
             <p>{{ activeRecipe.instructions }}</p>
@@ -35,23 +35,44 @@
             </form>
           </div>
         </div>
-        <div class="col-5">
+        <div class="col-5 px-3">
           <p>Ingredients</p>
           <div v-if="!editingIngredients && !ingredientsAreHidden">
             <div v-for="ingredient in activeRecipeIngredients" :key="ingredient.id">
               <p>{{ ingredient.quantity }} {{ ingredient.name }}</p>
             </div>
           </div>
+        </div>
+      </section>
+      <section class="row">
+        <div class="col-5 px-3 d-flex align-items-end">
+          <div v-if="account.id == activeRecipe.creatorId">
+            <button v-if="!addingInstructions && !editableInstructions" @click="flipInstructionTextarea"
+              class="btn btn-theme-green fs-5 align-self-bottom">Add
+              Instructions</button>
+            <button v-if="!addingInstructions && editableInstructions" @click="flipInstructionTextarea"
+              class="btn btn-theme-green fs-5">Edit
+              Instructions</button>
+          </div>
+          <div v-if="addingInstructions" class="d-flex">
+            <button @click="reloadEditableInstructions" class="btn btn-theme-orange">Cancel Changes</button>
+            <button class="btn btn-theme-green" type="submit" form="add-instructions">Submit Changes</button>
+          </div>
+        </div>
+        <div class="col-7">
           <div v-if="account.id == activeRecipe.creatorId">
             <div v-if="!addingIngredients && !editingIngredients">
-              <button @click="flipIngredientTextarea" class="btn btn-success">Add an
-                Ingredient</button>
-              <!-- //TODO change the bottom 2 conditions? -->
-              <button v-if="activeRecipeIngredients.length" @click="flipEditIngredientsForm" class="btn btn-success">Edit
-                Ingredients</button>
-              <button v-if="activeRecipeIngredients.length" class="btn btn-success" data-bs-toggle="modal"
-                data-bs-target="#deleteIngredientsModal">Select
-                Ingredients to Delete</button>
+              <div>
+                <button @click="flipIngredientTextarea" class="btn btn-theme-green fs-5 mb-2">Add Ingredients</button>
+              </div>
+              <div class="d-flex">
+                <button v-if="activeRecipeIngredients.length" @click="flipEditIngredientsForm"
+                  class="btn btn-theme-green fs-5">Edit
+                  Ingredients</button>
+                <button v-if="activeRecipeIngredients.length" class="btn btn-theme-orange ms-2" data-bs-toggle="modal"
+                  data-bs-target="#deleteIngredientsModal">Select
+                  Ingredients to Delete</button>
+              </div>
             </div>
             <div v-else-if="addingIngredients && !editingIngredients" class="d-flex">
               <div>
@@ -84,27 +105,11 @@
           </div>
           <div v-if="addingIngredients" class="d-flex">
             <button @click="flipIngredientTextarea" class="btn btn-danger">Finished</button>
-            <button @click="addIngredient" class="btn btn-success">Add Ingredient</button>
+            <button @click="addIngredient" class="btn btn-theme-green fs-5">Add Ingredient</button>
           </div>
           <div v-else-if="editingIngredients" class="d-flex">
-            <button @click="reloadEditableIngredients" class="btn btn-danger">Cancel Changes</button>
-            <button type="submit" form="edit-ingredients" class="btn btn-success">Edit Ingredients</button>
-          </div>
-        </div>
-      </section>
-      <section class="row">
-        <div class="col-5">
-          <div v-if="account.id == activeRecipe.creatorId">
-            <button v-if="!addingInstructions && !editableInstructions" @click="flipInstructionTextarea"
-              class="btn btn-success">Add
-              Instructions</button>
-            <button v-if="!addingInstructions && editableInstructions" @click="flipInstructionTextarea"
-              class="btn btn-success">Edit
-              Instructions</button>
-          </div>
-          <div v-if="addingInstructions" class="d-flex">
-            <button @click="reloadEditableInstructions" class="btn btn-danger">Cancel Changes</button>
-            <button class="btn btn-success" type="submit" form="add-instructions">Submit Changes</button>
+            <button @click="reloadEditableIngredients" class="btn btn-theme-orange">Cancel Changes</button>
+            <button type="submit" form="edit-ingredients" class="btn btn-theme-green">Submit Changes</button>
           </div>
         </div>
       </section>
