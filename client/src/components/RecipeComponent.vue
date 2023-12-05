@@ -48,7 +48,6 @@ export default {
       isFavRecipe: computed(() => AppState.myFavoriteRecipes.find((recipe) => recipe.id == props.recipeProp.id)),
 
       setActiveRecipe(recipeId) {
-        logger.log("Recipe ID", recipeId)
         recipesService.setActiveRecipe(recipeId);
       },
 
@@ -108,5 +107,16 @@ export default {
 .title-box {
   height: 4rem;
   width: 18rem;
+}
+
+@media screen and (max-width: 768px) {
+  .recipeCard-coverImg {
+    height: 18rem;
+    margin-left: 1rem;
+  }
+
+  .position-end {
+    top: 75%;
+  }
 }
 </style>

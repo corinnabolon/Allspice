@@ -88,9 +88,9 @@ footer {
 
 //The below theme not working?
 .btn-theme-green:disabled {
-  background-color: var(--theme-pink);
-  border: 1px solid var(--theme-peach);
-  color: var(--theme-green);
+  background-color: var(--theme-pink) !important;
+  border: 1px solid var(--theme-peach) !important;
+  color: var(--theme-green) !important;
 }
 
 .btn-theme-orange {

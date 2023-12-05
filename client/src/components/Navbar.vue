@@ -1,4 +1,5 @@
 <template>
+  <!-- //fixed-top to the navbar -->
   <nav class="navbar navbar-expand-sm navbar-coverImg position-relative">
     <div class="position-login d-flex align-items-center justify-content-end">
       <div>
@@ -167,9 +168,28 @@ a:hover {
   border-bottom-right-radius: 0;
 }
 
-@media screen and (min-width: 768px) {
+/* @media screen and (min-width: 768px) {
   nav {
     height: 64px;
+  }
+} */
+
+
+@media screen and (max-width: 768px) {
+  .navbar-coverImg {
+    background-image: v-bind(navbarCoverImg);
+    background-size: contain;
+    background-position: right;
+    height: 10rem;
+  }
+
+  .link-box {
+    position: block;
+    height: 20vh;
+    width: 100vw;
+    background-color: whitesmoke;
+    /* border-radius: 1rem; */
+    box-shadow: 5px 5px 5px gray;
   }
 }
 </style>

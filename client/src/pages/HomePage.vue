@@ -1,14 +1,7 @@
 <template>
   <div class="container-fluid">
-    <!-- <section class="row justify-content-center">
-      <div class="col-6 d-flex justify-content-around">
-        <p @click="goHome()" role="button">Home</p>
-        <p @click="flipWantsMyRecipes()" role="button">My Recipes</p>
-        <p @click="flipWantsFavorites()" role="button">Favorites</p>
-      </div>
-    </section> -->
     <section v-if="recipes" class="row justify-content-evenly large-margin-top">
-      <div v-for="recipe in recipes" :key="recipe.id" class="col-3 m-2 recipe-component">
+      <div v-for="recipe in recipes" :key="recipe.id" class="col-12 col-md-3 m-md-2 recipe-component">
         <RecipeComponent :recipeProp="recipe" />
       </div>
     </section>

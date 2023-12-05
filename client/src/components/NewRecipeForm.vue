@@ -48,7 +48,6 @@ export default {
     onMounted(() => {
       let deleteIngredientsModalElem = document.getElementById('deleteIngredientsModal')
       deleteIngredientsModalElem.addEventListener('hidden.bs.modal', function (event) {
-        logger.log("Onmounted")
         editable.value = {}
       })
     })
