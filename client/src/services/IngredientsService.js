@@ -15,8 +15,10 @@ class IngredientsService {
 
   async editIngredients(ingredients) {
     logger.log("ingredients", ingredients)
+    AppState.activeRecipeIngredients.length = 0
     for (const ingredient of ingredients) {
-      await api.put(`api/ingredients/${ingredient.id}`, ingredient)
+      const res = await api.put(`api/ingredients/${ingredient.id}`, ingredient)
+      AppState.activeRecipeIngredients.push(new Ingredient(ingredient))
     }
   }
 

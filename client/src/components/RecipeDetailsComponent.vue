@@ -39,7 +39,7 @@
         <div class="col-5">
           <p>Ingredients</p>
           <div v-if="!editingIngredients">
-            <div v-for="ingredient in editableIngredients" :key="ingredient.id">
+            <div v-for="ingredient in activeRecipeIngredients" :key="ingredient.id">
               <p>{{ ingredient.quantity }} {{ ingredient.name }}</p>
             </div>
           </div>
@@ -47,7 +47,7 @@
             <div v-if="!addingIngredients && !editingIngredients">
               <button @click="flipIngredientTextarea" class="btn btn-success">Add an
                 Ingredient</button>
-              <!-- //TODO change the bottom 2 conditions -->
+              <!-- //TODO change the bottom 2 conditions? -->
               <button v-if="activeRecipeIngredients.length" @click="flipEditIngredientsForm" class="btn btn-success">Edit
                 Ingredients</button>
               <button v-if="activeRecipeIngredients.length" class="btn btn-success" data-bs-toggle="modal"
@@ -68,12 +68,16 @@
             </div>
             <div v-else>
               <form @submit.prevent="editIngredients()" id="edit-ingredients">
+                <div class="d-flex">
+                  <label for="name" class="form-label">Name of Ingredient</label>
+                  <label for="quantity" class="form-label">Quantity of Ingredient</label>
+                </div>
                 <div v-for="ingredient in editableIngredients" :key="ingredient.id">
                   <div class="d-flex">
-                    <input v-model="ingredient.quantity" type="text" class="form-control" id="name" required
-                      maxLength="255" minLength="1">
                     <input v-model="ingredient.name" type="text" class="form-control" id="name" required maxLength="255"
                       minLength="3">
+                    <input v-model="ingredient.quantity" type="text" class="form-control" id="name" required
+                      maxLength="255" minLength="1">
                   </div>
                 </div>
               </form>
@@ -134,7 +138,6 @@ export default {
       let recipeCardModalElem = document.getElementById('recipeCardModal')
       recipeCardModalElem.addEventListener('hidden.bs.modal', function (event) {
         resetAll()
-        recipesService.clearAppState()
         editableIngredients.value = JSON.parse(JSON.stringify(AppState.activeRecipeIngredients));
       })
     })
@@ -224,8 +227,9 @@ export default {
       async editIngredients() {
         try {
           let ingredients = editableIngredients.value
-          await ingredientsService.editIngredients(ingredients)
           editingIngredients.value = false
+          await ingredientsService.editIngredients(ingredients)
+          editableIngredients.value = JSON.parse(JSON.stringify(AppState.activeRecipeIngredients));
           Pop.success("Ingredients edited!")
         } catch (error) {
           Pop.error(error)

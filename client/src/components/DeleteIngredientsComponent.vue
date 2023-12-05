@@ -20,6 +20,7 @@ import { Modal } from "bootstrap";
 export default {
   setup() {
 
+
     return {
       activeRecipeIngredients: computed(() => AppState.activeRecipeIngredients),
 
