@@ -34,7 +34,7 @@
 
 <script>
 import { AppState } from '../AppState';
-import { computed, reactive, onMounted, ref } from 'vue';
+import { computed, reactive, onMounted, onUnmounted, ref } from 'vue';
 import Pop from "../utils/Pop.js";
 import { recipesService } from "../services/RecipesService.js";
 import { Modal } from "bootstrap";
@@ -44,9 +44,8 @@ export default {
   setup() {
     const editable = ref({})
 
-    //TODO figure out why the below isn't working
     onMounted(() => {
-      let deleteIngredientsModalElem = document.getElementById('deleteIngredientsModal')
+      let deleteIngredientsModalElem = document.getElementById('createRecipeModal')
       deleteIngredientsModalElem.addEventListener('hidden.bs.modal', function (event) {
         editable.value = {}
       })
