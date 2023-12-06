@@ -49,7 +49,10 @@ class RecipesService {
   async searchRecipesByCategory(category) {
     let res = await api.get(`api/recipes?category=${category}`)
     logger.log(res.data)
-    AppState.recipes = res.data.map((queriedPOJO) => new Recipe(queriedPOJO))
+    AppState.queriedRecipes = res.data.map((queriedPOJO) => new Recipe(queriedPOJO))
+    AppState.wantsQueried = true
+    AppState.wantsFavorites = false
+    AppState.wantsMyRecipes = false
   }
 
   clearAppState() {

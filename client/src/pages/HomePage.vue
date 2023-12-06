@@ -94,10 +94,11 @@ import EditProfileComponent from '../components/EditProfileComponent.vue';
 export default {
   setup() {
     let account = computed(() => AppState.account)
-    let wantsFavorites = ref(false)
-    let wantsMyRecipes = ref(false)
-    // let wantsFavorites = ref(AppState.wantsFavorites)
-    // let wantsMyRecipes = ref(AppState.wantsMyRecipes)
+    // let wantsFavorites = ref(false)
+    // let wantsMyRecipes = ref(false)
+    let wantsQueried = ref(AppState.wantsQueried)
+    let wantsFavorites = ref(AppState.wantsFavorites)
+    let wantsMyRecipes = ref(AppState.wantsMyRecipes)
 
     onMounted(() => {
       getRecipes();
@@ -129,6 +130,7 @@ export default {
     return {
       wantsFavorites,
       wantsMyRecipes,
+      wantsQueried,
       account,
 
       navbarCoverImg: computed(() => `url(https://images.unsplash.com/photo-1483137140003-ae073b395549?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)`),
@@ -146,27 +148,32 @@ export default {
       // }),
 
       recipes: computed(() => {
-        if (wantsFavorites.value) {
+        if (AppState.wantsFavorites) {
           return AppState.myFavoriteRecipes
-        } else if (wantsMyRecipes.value) {
+        } else if (AppState.wantsMyRecipes) {
           return AppState.recipes.filter(recipe => recipe.creatorId == AppState.account.id)
+        } else if (AppState.wantsQueried) {
+          return AppState.queriedRecipes
         }
         return AppState.recipes
       }),
 
       flipWantsFavorites() {
-        wantsFavorites.value = !wantsFavorites.value;
-        wantsMyRecipes.value = false;
+        AppState.wantsFavorites = !AppState.wantsFavorites;
+        AppState.wantsMyRecipes = false;
+        AppState.wantsQueried = false;
       },
 
       flipWantsMyRecipes() {
-        wantsMyRecipes.value = !wantsMyRecipes.value;
-        wantsFavorites.value = false;
+        AppState.wantsMyRecipes = !AppState.wantsMyRecipes;
+        AppState.wantsFavorites = false;
+        AppState.wantsQueried = false;
       },
 
       goHome() {
-        wantsMyRecipes.value = false;
-        wantsFavorites.value = false;
+        AppState.wantsMyRecipes = false;
+        AppState.wantsFavorites = false;
+        AppState.wantsQueried = false;
       },
 
     }

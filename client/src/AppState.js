@@ -16,5 +16,8 @@ export const AppState = reactive({
 
   wantsFavorites: false,
   wantsMyRecipes: false,
+  wantsQueried: false,
   ingredientsAreHidden: false,
+  /** @type {import('./models/Recipe.js').Recipe | null} */
+  queriedRecipes: []
 })

@@ -88,9 +88,9 @@ export default {
 
       async searchRecipeByCategory() {
         try {
-          logger.log("Triggered")
           let query = editable.value
           await recipesService.searchRecipesByCategory(query)
+          editable.value = ""
         } catch (error) {
           Pop.error(error)
         }
