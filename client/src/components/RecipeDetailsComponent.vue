@@ -15,9 +15,9 @@
         </p>
       </div>
     </div>
-    <div class="col-12 col-md-8 mt-2 mt-md-0 d-flex flex-column justify-content-between">
+    <div class="col-12 col-md-8 d-flex flex-column justify-content-between">
       <section class="row">
-        <div class="col-12">
+        <div class="col-12 mt-3 mt-md-0">
           <div class="d-flex justify-content-end serif-font fs-4">
             <p class="bg-theme-green text-theme-pink px-3 rounded-pill">{{ activeRecipe.category }}</p>
           </div>
@@ -26,6 +26,16 @@
           <p class="serif-font fs-4">Recipe Instructions</p>
           <div v-if="!addingInstructions">
             <p class="serif-font">{{ activeRecipe.instructions }}</p>
+            <div class="col-12 col-md-5 mt-2 mt-md-0 px-md-3 invisible-on-desktop align-items-end">
+              <div v-if="account.id == activeRecipe.creatorId">
+                <button v-if="!addingInstructions && !editableInstructions" @click="flipInstructionTextarea"
+                  class="btn btn-theme-green fs-5 align-self-bottom">Add
+                  Instructions</button>
+                <button v-if="!addingInstructions && editableInstructions" @click="flipInstructionTextarea"
+                  class="btn btn-theme-green fs-5">Edit
+                  Instructions</button>
+              </div>
+            </div>
           </div>
           <div v-else>
             <form @submit.prevent="addInstructions()" id="add-instructions">
@@ -33,10 +43,15 @@
               <textarea v-model="editableInstructions" class="form-control" id="recipeInstructions"
                 aria-describedby="recipeInstructions" minlength="3" maxlength="1000" />
             </form>
+            <div class="invisible-on-desktop justify-content-center mt-3 mt-md-0">
+              <button @click="reloadEditableInstructions" class="btn btn-theme-orange me-3">Cancel
+                Changes</button>
+              <button class="btn btn-theme-green p-2" type="submit" form="add-instructions">Submit Changes</button>
+            </div>
           </div>
         </div>
-        <div class="col-5 px-3 order-2 order-md-1">
-          <p class="serif-font fs-4">Ingredients</p>
+        <div class="col-12 col-md-5 px-3">
+          <p class="serif-font fs-4 mt-4 mt-md-0">Ingredients</p>
           <div v-if="!editingIngredients && !ingredientsAreHidden">
             <div v-for="ingredient in activeRecipeIngredients" :key="ingredient.id">
               <p class="serif-font fs-5">・{{ ingredient.quantity }} {{ ingredient.name }}</p>
@@ -45,7 +60,7 @@
         </div>
       </section>
       <section class="row">
-        <div class="col-5 px-3 d-flex align-items-end order-1 order-md-2">
+        <div class="col-12 col-md-5 px-3 invisible-on-mobile align-items-end">
           <div v-if="account.id == activeRecipe.creatorId">
             <button v-if="!addingInstructions && !editableInstructions" @click="flipInstructionTextarea"
               class="btn btn-theme-green fs-5 align-self-bottom">Add
@@ -54,24 +69,35 @@
               class="btn btn-theme-green fs-5">Edit
               Instructions</button>
           </div>
-          <div v-if="addingInstructions" class="d-flex">
-            <button @click="reloadEditableInstructions" class="btn btn-theme-orange">Cancel Changes</button>
+          <div v-if="addingInstructions" class="invisible-on-mobile justify-content-center">
+            <button @click="reloadEditableInstructions" class="btn btn-theme-orange p-2 me-3">Cancel
+              Changes</button>
             <button class="btn btn-theme-green" type="submit" form="add-instructions">Submit Changes</button>
           </div>
         </div>
-        <div class="col-7">
+        <div class="col-12 col-md-7">
           <div v-if="account.id == activeRecipe.creatorId">
             <div v-if="!addingIngredients && !editingIngredients">
               <div>
                 <button @click="flipIngredientTextarea" class="btn btn-theme-green fs-5 mb-2">Add Ingredients</button>
               </div>
-              <div class="d-flex">
+              <div class="invisible-on-mobile">
                 <button v-if="activeRecipeIngredients.length" @click="flipEditIngredientsForm"
                   class="btn btn-theme-green fs-5">Edit
                   Ingredients</button>
                 <button v-if="activeRecipeIngredients.length" class="btn btn-theme-orange ms-2" data-bs-toggle="modal"
                   data-bs-target="#deleteIngredientsModal">Select
                   Ingredients to Delete</button>
+              </div>
+              <div class="invisible-on-desktop">
+                <div>
+                  <button v-if="activeRecipeIngredients.length" @click="flipEditIngredientsForm"
+                    class="btn btn-theme-green fs-5">Edit
+                    Ingredients</button>
+                  <button v-if="activeRecipeIngredients.length" class="btn btn-theme-orange ms-md-2 mt-2 mt-md-0"
+                    data-bs-toggle="modal" data-bs-target="#deleteIngredientsModal">Select
+                    Ingredients to Delete</button>
+                </div>
               </div>
             </div>
             <div v-else-if="addingIngredients && !editingIngredients" class="d-flex mb-3 row">
@@ -122,8 +148,9 @@
             <button @click="addIngredient" class="btn btn-theme-green fs-5">Add Ingredient</button>
           </div>
           <div v-else-if="editingIngredients" class="d-flex">
-            <button @click="reloadEditableIngredients" class="btn btn-theme-orange">Cancel Changes</button>
-            <button type="submit" form="edit-ingredients" class="btn btn-theme-green">Submit Changes</button>
+            <button @click="reloadEditableIngredients" class="btn btn-theme-orange p-2 me-3 me-md-1">Cancel
+              Changes</button>
+            <button type="submit" form="edit-ingredients" class="btn btn-theme-green p-2">Submit Changes</button>
           </div>
         </div>
       </section>
@@ -328,5 +355,32 @@ input {
   position: absolute;
   left: 5%;
   top: 90%;
+}
+
+.invisible-on-desktop {
+  display: flex;
+}
+
+.invisible-on-mobile {
+  display: flex;
+}
+
+
+//below styles apply to md screens and below
+@media screen and (min-width: 768px) {
+  .invisible-on-desktop {
+    display: none;
+  }
+}
+
+//below styles apply to screens smaller than md
+@media screen and (max-width: 768px) {
+  .invisible-on-mobile {
+    display: none;
+  }
+
+  input {
+    width: 8rem;
+  }
 }
 </style>
