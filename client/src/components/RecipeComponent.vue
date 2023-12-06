@@ -7,7 +7,7 @@
             {{ recipeProp.category }}
           </p>
         </div>
-        <div class="col-2">
+        <div v-if="account.id" class="col-2">
           <p class="recipeCard-words rounded-bottom text-center fs-3">
             <i v-if="isFavRecipe" @click.stop="removeFavorite(recipeProp.id)" role="button"
               class="mdi mdi-heart text-danger" title="Unfavorite this recipe"></i>
@@ -44,6 +44,7 @@ export default {
 
   setup(props) {
     return {
+      account: computed(() => AppState.account),
       recipeCoverImg: computed(() => `url(${props.recipeProp?.img})`),
       isFavRecipe: computed(() => AppState.myFavoriteRecipes.find((recipe) => recipe.id == props.recipeProp.id)),
 

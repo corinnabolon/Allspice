@@ -19,11 +19,15 @@
           </div>
         </section>
         <section class="row position-relative justify-content-center align-items-center">
-          <div
+          <div v-if="account.id"
             class="col-6 d-flex justify-content-between px-md-5 align-items-center link-box serif-font fs-3 text-theme-green">
             <p @click="goHome()" role="button">Home</p>
             <p @click="flipWantsMyRecipes()" role="button">My Recipes</p>
             <p @click="flipWantsFavorites()" role="button">Favorites</p>
+          </div>
+          <div v-else
+            class="col-6 d-flex justify-content-center px-md-5 align-items-center not-logged-in-link-box serif-font fs-3 text-theme-green">
+            <p @click="goHome()" role="button">All Recipes</p>
           </div>
         </section>
 
@@ -195,6 +199,16 @@ export default {
   position: absolute;
   height: 20vh;
   width: 50vw;
+  background-color: whitesmoke;
+  border-radius: 1rem;
+  box-shadow: 5px 5px 5px gray;
+  top: -1rem;
+}
+
+.not-logged-in-link-box {
+  position: absolute;
+  height: 20vh;
+  width: 20vw;
   background-color: whitesmoke;
   border-radius: 1rem;
   box-shadow: 5px 5px 5px gray;

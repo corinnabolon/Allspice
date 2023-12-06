@@ -7,7 +7,7 @@
           <button @click="removeRecipe(activeRecipe.id)" class="btn btn-theme-orange delete-recipe-button">Delete
             Recipe</button>
         </div>
-        <p class="recipeCard-words rounded-bottom text-center fs-3 px-1">
+        <p v-if="account.id" class="recipeCard-words rounded-bottom text-center fs-3 px-1">
           <i v-if="isFavRecipe" @click.stop="removeFavorite(activeRecipe.id)" role="button"
             class="mdi mdi-heart text-danger" title="Unfavorite this recipe"></i>
           <i v-else @click.stop="createFavorite(activeRecipe.id)" role="button" class="mdi mdi-heart-outline"
