@@ -2,7 +2,7 @@
   <div>
     <form @submit.prevent="createRecipe">
       <div class="mb-3">
-        <label for="title" class="form-label">
+        <label for="title" class="form-label" aria-label="Recipe Title">
           <p class="serif-font fs-5 mb-0">Title</p>
         </label>
         <input v-model="editable.title" type="text" class="form-control" id="title" placeholder="Title..." required
@@ -12,12 +12,12 @@
         <label for="category" class="form-label">
           <p class="serif-font fs-5 mb-0">Category</p>
         </label>
-        <select v-model="editable.category" class="form-select" aria-label="Default select example" required>
+        <select v-model="editable.category" class="form-select" aria-label="Recipe Category" required>
           <option v-for="category in categories" :key="categories" :value="category">{{ category }}</option>
         </select>
       </div>
       <div>
-        <label for="img" class="form-label">
+        <label for="img" class="form-label" aria-label="Rcipe Image URL">
           <p class="serif-font fs-5 mb-0">Image URL</p>
         </label>
         <input v-model="editable.img" type="text" class="form-control" id="title" placeholder="Image URL..." required

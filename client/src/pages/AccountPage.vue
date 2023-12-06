@@ -4,6 +4,7 @@
     <img class="rounded" :src="account.picture" alt="" />
     <p>{{ account.email }}</p>
   </div>
+  <button class="btn btn-theme-green" data-bs-toggle="modal" data-bs-target="#editProfileModal">Edit Your Profile</button>
 </template>
 
 <script>

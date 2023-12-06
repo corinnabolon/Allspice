@@ -65,6 +65,15 @@
       <DeleteIngredientsComponent />
     </template>
   </ModalComponent>
+
+  <ModalComponent :modalId="'editProfileComponent'" :modalSize="'modal-md'">
+    <template #modalTitle>
+      <p class="serif-font fs-5">Your Profile Details</p>
+    </template>
+    <template #modalBody>
+      <EditProfileComponent />
+    </template>
+  </ModalComponent>
 </template>
 
 
@@ -80,6 +89,7 @@ import ModalComponent from '../components/ModalComponent.vue';
 import NewRecipeForm from '../components/NewRecipeForm.vue';
 import RecipeDetailsComponent from '../components/RecipeDetailsComponent.vue';
 import DeleteIngredientsComponent from '../components/DeleteIngredientsComponent.vue';
+import EditProfileComponent from '../components/EditProfileComponent.vue';
 
 export default {
   setup() {
@@ -161,7 +171,7 @@ export default {
 
     }
   },
-  components: { RecipeComponent, ModalComponent, NewRecipeForm, RecipeDetailsComponent, DeleteIngredientsComponent }
+  components: { RecipeComponent, ModalComponent, NewRecipeForm, RecipeDetailsComponent, DeleteIngredientsComponent, EditProfileComponent }
 }
 </script>
 
