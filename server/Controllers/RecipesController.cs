@@ -39,11 +39,11 @@ public class RecipesController : ControllerBase
 
   [HttpGet]
 
-  public ActionResult<List<Recipe>> GetRecipes()
+  public ActionResult<List<Recipe>> GetRecipes(string category)
   {
     try
     {
-      List<Recipe> recipes = _recipesService.GetRecipes();
+      List<Recipe> recipes = _recipesService.GetRecipes(category);
       return Ok(recipes);
     }
     catch (Exception e)
