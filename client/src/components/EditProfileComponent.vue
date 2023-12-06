@@ -1,45 +1,72 @@
 <template>
   <div>
-    <form @submit.prevent="createRecipe">
+    <form @submit.prevent="editProfile">
       <div class="mb-3">
-        <label for="title" class="form-label">
-          <p class="serif-font fs-5 mb-0">Title</p>
+        <label for="name" class="form-label">
+          <p class="serif-font fs-5 mb-0">Username</p>
         </label>
-        <input v-model="editable.title" type="text" class="form-control" id="title" placeholder="Title..." required
+        <input v-model="editable.name" type="text" class="form-control" id="name" placeholder="Your username..." required
           maxLength="255">
       </div>
       <div class="mb-3">
-        <label for="category" class="form-label">
-          <p class="serif-font fs-5 mb-0">Category</p>
+        <label for="picture" class="form-label">
+          <p class="serif-font fs-5 mb-0">Avatar</p>
         </label>
-        <select v-model="editable.category" class="form-select" aria-label="Default select example" required>
-          <option v-for="category in categories" :key="categories" :value="category">{{ category }}</option>
-        </select>
-      </div>
-      <div>
-        <label for="img" class="form-label">
-          <p class="serif-font fs-5 mb-0">Image URL</p>
-        </label>
-        <input v-model="editable.img" type="text" class="form-control" id="title" placeholder="Image URL..." required
-          maxLength="1000">
+        <input v-model="editable.picture" type="url" class="form-control" id="picture"
+          placeholder="Image URL of your avatar..." required maxLength="255">
       </div>
       <div class="d-flex justify-content-end mt-3">
-        <button type="button" class="btn btn-theme-orange me-3" data-bs-dismiss="modal" aria-label="Close">Close</button>
+        <button type="button" class="btn btn-theme-orange me-3" data-bs-dismiss="modal"
+          aria-label="Cancel">Cancel</button>
         <button type="submit" class="btn btn-theme-green">Submit</button>
       </div>
     </form>
-
-
   </div>
 </template>
 
 
 <script>
 import { AppState } from '../AppState';
-import { computed, reactive, onMounted } from 'vue';
+import { computed, reactive, onMounted, ref } from 'vue';
+import Pop from "../utils/Pop.js";
+import { Modal } from "bootstrap";
+import { accountService } from "../services/AccountService.js";
+import { logger } from "../utils/Logger.js";
+
 export default {
   setup() {
-    return {}
+    let editable = ref({})
+
+    onMounted(() => {
+      let editProfileComponentElem = document.getElementById('editProfileComponent')
+      editProfileComponentElem.addEventListener('show.bs.modal', function (event) {
+        logger.log("Triggered")
+        editable.value = JSON.parse(JSON.stringify(AppState.account));
+      })
+      editProfileComponentElem.addEventListener('hidden.bs.modal', function (event) {
+        logger.log("Triggered")
+        editable.value = JSON.parse(JSON.stringify(AppState.account));
+      })
+      editable.value = JSON.parse(JSON.stringify(AppState.account));
+    })
+
+    //TODO: onMounted reset editable to ref AppState.account
+
+    return {
+      editable,
+
+      async editProfile() {
+        try {
+          let editedData = editable.value
+          await accountService.editAccount(editedData)
+          Pop.success("Profile edited!")
+          Modal.getOrCreateInstance("#editProfileComponent").hide()
+        } catch (error) {
+          Pop.error(error)
+        }
+      }
+
+    }
   }
 };
 </script>
