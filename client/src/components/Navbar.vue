@@ -4,10 +4,10 @@
     <div class="d-flex align-items-center justify-content-end"
       :class="route.name != 'Account' ? 'position-login' : 'position-account-login'">
       <div v-if="route.name != 'Account'" class="me-3 me-md-5">
-        <form class="d-flex align-items-center position-relative">
-          <input type="test" class="form-control" id="searchbar" aria-describedby="searchBar" placeholder="Search..."
-            minlength="1" maxlength="50">
-          <p class="fs-3"><i class="mdi mdi-magnify search-position" role="button" type="submit"></i></p>
+        <form @submit.prevent="searchRecipeByCategory" class="d-flex align-items-center position-relative">
+          <input v-model="editable" type="text" class="form-control" id="searchbar" aria-describedby="searchBar"
+            placeholder="Search..." minlength="1" maxlength="50">
+          <button class="fs-3"><i class="mdi mdi-magnify search-position" role="button" type="submit"></i></button>
         </form>
       </div>
       <div v-else>
@@ -40,9 +40,13 @@ import { loadState, saveState } from '../utils/Store.js';
 import Login from './Login.vue';
 import { recipesService } from '../services/RecipesService.js';
 import { useRoute } from "vue-router";
+import Pop from "../utils/Pop.js";
+import { logger } from "../utils/Logger.js";
+
 
 export default {
   setup() {
+    let editable = ref("")
     let wantsFavorites = ref(AppState.wantsFavorites)
     let wantsMyRecipes = ref(AppState.wantsMyRecipes)
     const route = useRoute();
@@ -54,6 +58,7 @@ export default {
     })
 
     return {
+      editable,
       route,
       wantsFavorites,
       wantsMyRecipes,
@@ -80,6 +85,16 @@ export default {
         AppState.wantsMyRecipes = false;
         AppState.wantsFavorites = false;
       },
+
+      async searchRecipeByCategory() {
+        try {
+          logger.log("Triggered")
+          let query = editable.value
+          await recipesService.searchRecipesByCategory(query)
+        } catch (error) {
+          Pop.error(error)
+        }
+      }
     }
   },
   components: { Login }
@@ -87,10 +102,15 @@ export default {
 </script>
 
 <style scoped>
+button {
+  border: none;
+  background-color: none;
+}
+
 .search-position {
   position: absolute;
   top: 0%;
-  left: 89%;
+  left: 85%;
 }
 
 .position-login {

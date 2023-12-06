@@ -46,6 +46,12 @@ class RecipesService {
     AppState.recipes.splice(recipeIndex, 1)
   }
 
+  async searchRecipesByCategory(category) {
+    let res = await api.get(`api/recipes?category=${category}`)
+    logger.log(res.data)
+    AppState.recipes = res.data.map((queriedPOJO) => new Recipe(queriedPOJO))
+  }
+
   clearAppState() {
     AppState.activeRecipe = null
     AppState.activeRecipeIngredients.length = 0
