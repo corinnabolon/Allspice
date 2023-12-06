@@ -11,8 +11,8 @@ class FavoritesService {
   //Note: recipeId == a recipe.id that we clicked on; we turn it into a recipeId because CreateFavorite on the back end creates a many-to-many with an accountId and a recipeId, so we have to post / create it in that format
   async createFavorite(recipeId) {
     let foundRecipe = AppState.recipes.find(recipe => recipe.id == recipeId)
-    logger.log("Foundrecipe", foundRecipe)
     foundRecipe.recipeId = foundRecipe.id
+    //requires a recipeId to be posted to favorites
     const res = await api.post("api/favorites", foundRecipe)
     foundRecipe.accountId = res.data.accountId
     foundRecipe.favoriteId = res.data.id
