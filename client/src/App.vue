@@ -32,7 +32,9 @@ export default {
   --theme-orange: #EE7214;
 }
 
-main {
+main,
+body,
+html {
   background-color: var(--theme-pink);
 }
 

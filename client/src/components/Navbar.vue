@@ -1,16 +1,16 @@
 <template>
   <!-- //fixed-top to the navbar -->
-  <nav class="navbar navbar-expand-sm navbar-coverImg position-relative">
+  <nav class="navbar-expand-sm position-relative">
     <div class="position-login d-flex align-items-center justify-content-end">
-      <div>
+      <div class="me-3 me-md-5">
         <form class="d-flex align-items-center position-relative">
           <input type="test" class="form-control" id="searchbar" aria-describedby="searchBar" placeholder="Search..."
             minlength="1" maxlength="50">
           <p class="fs-3"><i class="mdi mdi-magnify search-position" role="button" type="submit"></i></p>
         </form>
       </div>
-      <button class="btn text-dark" @click="toggleTheme"><i class="mdi"
-          :class="theme == 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"></i></button>
+      <!-- <button class="btn text-dark" @click="toggleTheme"><i class="mdi"
+          :class="theme == 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"></i></button> -->
       <Login />
     </div>
     <!-- <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
@@ -23,44 +23,6 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
-      <div class="container">
-        <section class="row">
-          <div class="col-2"></div>
-          <div class="col-4 serif-font font-beige text-shadow pb-5">
-            <p class="fs-1">All-Spice</p>
-            <p class="fs-2">Cherish your family</p>
-            <p class="fs-2">And their cooking</p>
-          </div>
-          <div class="col-4"></div>
-          <div class="col-2 d-flex align-items-end justify-content-end">
-            <div v-if="account.id">
-              <button data-bs-toggle="modal" data-bs-target="#createRecipeModal"
-                class="btn btn-success btn-theme-green">Create
-                Recipe</button>
-            </div>
-          </div>
-        </section>
-        <section class="row position-relative justify-content-center align-items-center">
-          <div class="col-6 d-flex justify-content-around align-items-center link-box serif-font fs-3 text-theme-green">
-            <p @click="goHome()" role="button">Home</p>
-            <p @click="flipWantsMyRecipes()" role="button">My Recipes</p>
-            <p @click="flipWantsFavorites()" role="button">Favorites</p>
-          </div>
-        </section>
-      </div>
-      <!-- <ul class="navbar-nav me-auto">
-        <li>
-          <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
-            About
-          </router-link>
-        </li>
-      </ul> -->
-      <!-- LOGIN COMPONENT HERE -->
-      <!-- <div>
-        <button class="btn text-light bg-dark" @click="toggleTheme"><i class="mdi"
-            :class="theme == 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"></i></button>
-      </div>
-      <Login /> -->
     </div>
   </nav>
 </template>
@@ -116,16 +78,6 @@ export default {
 </script>
 
 <style scoped>
-.link-box {
-  position: absolute;
-  height: 20vh;
-  width: 50vw;
-  background-color: whitesmoke;
-  border-radius: 1rem;
-  box-shadow: 5px 5px 5px gray;
-  top: -1rem;
-}
-
 .search-position {
   position: absolute;
   top: 0%;
@@ -136,22 +88,6 @@ export default {
   position: absolute;
   left: 70%;
   top: 5%;
-}
-
-.text-shadow {
-  text-shadow: 1px 1px 2px var(--theme-green), 1px 1px 2px var(--theme-green), 1px 1px 2px var(--theme-green);
-}
-
-.font-beige {
-  color: beige;
-}
-
-.navbar-coverImg {
-  background-image: v-bind(navbarCoverImg);
-  background-size: cover;
-  background-position: center;
-  height: 20rem;
-  background-attachment: fixed;
 }
 
 a:hover {
@@ -168,28 +104,15 @@ a:hover {
   border-bottom-right-radius: 0;
 }
 
-/* @media screen and (min-width: 768px) {
-  nav {
-    height: 64px;
-  }
-} */
-
-
 @media screen and (max-width: 768px) {
-  .navbar-coverImg {
-    background-image: v-bind(navbarCoverImg);
-    background-size: contain;
-    background-position: right;
-    height: 10rem;
+  .search-position {
+    top: 4%;
+    left: 82%;
   }
 
-  .link-box {
-    position: block;
-    height: 20vh;
-    width: 100vw;
-    background-color: whitesmoke;
-    /* border-radius: 1rem; */
-    box-shadow: 5px 5px 5px gray;
+  .position-login {
+    left: 40%;
+    top: 2%;
   }
 }
 </style>

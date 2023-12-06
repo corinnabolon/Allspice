@@ -1,6 +1,6 @@
 <template>
   <section v-if="activeRecipe" class="row reci-card">
-    <div class="col-4 position-relative">
+    <div class="col-12 col-md-4 position-relative">
       <img :src="activeRecipe.img" class="reci-img">
       <div>
         <div v-if="account.id == activeRecipe.creatorId">
@@ -15,14 +15,14 @@
         </p>
       </div>
     </div>
-    <div class="col-8 d-flex flex-column justify-content-between">
+    <div class="col-12 col-md-8 mt-2 mt-md-0 d-flex flex-column justify-content-between">
       <section class="row">
         <div class="col-12">
           <div class="d-flex justify-content-end serif-font fs-4">
             <p class="bg-theme-green text-theme-pink px-3 rounded-pill">{{ activeRecipe.category }}</p>
           </div>
         </div>
-        <div class="col-5 px-3">
+        <div class="col-12 col-md-5 px-3">
           <p class="serif-font fs-4">Recipe Instructions</p>
           <div v-if="!addingInstructions">
             <p class="serif-font">{{ activeRecipe.instructions }}</p>
@@ -35,7 +35,7 @@
             </form>
           </div>
         </div>
-        <div class="col-5 px-3">
+        <div class="col-5 px-3 order-2 order-md-1">
           <p class="serif-font fs-4">Ingredients</p>
           <div v-if="!editingIngredients && !ingredientsAreHidden">
             <div v-for="ingredient in activeRecipeIngredients" :key="ingredient.id">
@@ -45,7 +45,7 @@
         </div>
       </section>
       <section class="row">
-        <div class="col-5 px-3 d-flex align-items-end">
+        <div class="col-5 px-3 d-flex align-items-end order-1 order-md-2">
           <div v-if="account.id == activeRecipe.creatorId">
             <button v-if="!addingInstructions && !editableInstructions" @click="flipInstructionTextarea"
               class="btn btn-theme-green fs-5 align-self-bottom">Add

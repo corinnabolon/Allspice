@@ -1,8 +1,39 @@
 <template>
   <div class="container-fluid">
-    <section v-if="recipes" class="row justify-content-evenly large-margin-top">
-      <div v-for="recipe in recipes" :key="recipe.id" class="col-12 col-md-3 m-md-2 recipe-component">
-        <RecipeComponent :recipeProp="recipe" />
+    <section class="row navbar-coverImg">
+      <div class="col-12">
+        <section class="row">
+          <div class="col-md-2"></div>
+          <div class="col-6 col-md-4 serif-font font-beige text-shadow pb-4 mt-5 mb-md-2">
+            <p class="fs-1">All-Spice</p>
+            <p class="fs-2">Cherish your family</p>
+            <p class="fs-2">And their cooking</p>
+          </div>
+          <div class="col-2 col-md-4"></div>
+          <div class="col-4 col-md-2 d-flex align-items-end justify-content-end">
+            <div v-if="account.id">
+              <button data-bs-toggle="modal" data-bs-target="#createRecipeModal"
+                class="btn btn-success btn-theme-green mb-5 mb-md-0">Create
+                Recipe</button>
+            </div>
+          </div>
+        </section>
+        <section class="row position-relative justify-content-center align-items-center">
+          <div
+            class="col-6 d-flex justify-content-between px-md-5 align-items-center link-box serif-font fs-3 text-theme-green">
+            <p @click="goHome()" role="button">Home</p>
+            <p @click="flipWantsMyRecipes()" role="button">My Recipes</p>
+            <p @click="flipWantsFavorites()" role="button">Favorites</p>
+          </div>
+        </section>
+
+        <section v-if="recipes" class="row justify-content-evenly large-margin-top">
+          <div v-for="recipe in recipes" :key="recipe.id" class="col-12 col-md-3 m-md-2 recipe-component">
+            <RecipeComponent :recipeProp="recipe" />
+          </div>
+        </section>
+
+
       </div>
     </section>
   </div>
@@ -53,10 +84,10 @@ import DeleteIngredientsComponent from '../components/DeleteIngredientsComponent
 export default {
   setup() {
     let account = computed(() => AppState.account)
-    // let wantsFavorites = ref(false)
-    // let wantsMyRecipes = ref(false)
-    let wantsFavorites = ref(AppState.wantsFavorites)
-    let wantsMyRecipes = ref(AppState.wantsMyRecipes)
+    let wantsFavorites = ref(false)
+    let wantsMyRecipes = ref(false)
+    // let wantsFavorites = ref(AppState.wantsFavorites)
+    // let wantsMyRecipes = ref(AppState.wantsMyRecipes)
 
     onMounted(() => {
       getRecipes();
@@ -90,6 +121,8 @@ export default {
       wantsMyRecipes,
       account,
 
+      navbarCoverImg: computed(() => `url(https://images.unsplash.com/photo-1483137140003-ae073b395549?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)`),
+
       activeRecipe: computed(() => AppState.activeRecipe),
       activeRecipeIngredients: computed(() => AppState.activeRecipeIngredients),
 
@@ -103,9 +136,9 @@ export default {
       // }),
 
       recipes: computed(() => {
-        if (AppState.wantsFavorites) {
+        if (wantsFavorites.value) {
           return AppState.myFavoriteRecipes
-        } else if (AppState.wantsMyRecipes) {
+        } else if (wantsMyRecipes.value) {
           return AppState.recipes.filter(recipe => recipe.creatorId == AppState.account.id)
         }
         return AppState.recipes
@@ -133,6 +166,32 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.navbar-coverImg {
+  background-image: v-bind(navbarCoverImg);
+  background-size: cover;
+  background-position: center;
+  height: 20rem;
+  background-attachment: fixed;
+}
+
+.link-box {
+  position: absolute;
+  height: 20vh;
+  width: 50vw;
+  background-color: whitesmoke;
+  border-radius: 1rem;
+  box-shadow: 5px 5px 5px gray;
+  top: -1rem;
+}
+
+.text-shadow {
+  text-shadow: 1px 1px 2px var(--theme-green), 1px 1px 2px var(--theme-green), 1px 1px 2px var(--theme-green);
+}
+
+.font-beige {
+  color: beige;
+}
+
 .recipe-component:hover {
   transform: scale(1.03);
   transition: all 0.15s linear;
@@ -140,6 +199,12 @@ export default {
 
 .large-margin-top {
   margin-top: 6rem;
+}
+
+.position-login {
+  position: absolute;
+  left: 70%;
+  top: 5%;
 }
 
 .home {
@@ -159,6 +224,13 @@ export default {
       object-fit: contain;
       object-position: center;
     }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .link-box {
+    height: 15vh;
+    width: 90vw;
   }
 }
 </style>

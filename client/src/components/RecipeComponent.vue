@@ -1,6 +1,6 @@
 <template>
   <div @click="setActiveRecipe(recipeProp.id)">
-    <div class="recipeCard-coverImg" @click="openModal" role="button" title="See recipe details">
+    <div class="recipeCard-coverImg box-shadow rounded" @click="openModal" role="button" title="See recipe details">
       <section class="row d-flex justify-content-between px-2">
         <div class="col-6 fs-5">
           <p class="recipeCard-words rounded-pill text-center mt-2">
@@ -44,7 +44,7 @@ export default {
 
   setup(props) {
     return {
-      recipeCoverImg: computed(() => `url(${props.recipeProp.img})`),
+      recipeCoverImg: computed(() => `url(${props.recipeProp?.img})`),
       isFavRecipe: computed(() => AppState.myFavoriteRecipes.find((recipe) => recipe.id == props.recipeProp.id)),
 
       setActiveRecipe(recipeId) {
@@ -98,6 +98,10 @@ export default {
   font-weight: bold;
 }
 
+.box-shadow {
+  box-shadow: 5px 5px 5px gray;
+}
+
 .position-end {
   position: absolute;
   left: 5%;
@@ -112,7 +116,7 @@ export default {
 @media screen and (max-width: 768px) {
   .recipeCard-coverImg {
     height: 18rem;
-    margin-left: 1rem;
+    margin: 1rem;
   }
 
   .position-end {
