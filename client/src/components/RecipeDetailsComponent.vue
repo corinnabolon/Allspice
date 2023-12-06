@@ -79,7 +79,7 @@
           <div v-if="account.id == activeRecipe.creatorId">
             <div v-if="!addingIngredients && !editingIngredients">
               <div>
-                <button @click="flipIngredientTextarea" class="btn btn-theme-green fs-5 mb-2">Add Ingredients</button>
+                <button @click="flipIngredientTextarea" class="btn btn-theme-green fs-5 mb-md-1">Add Ingredients</button>
               </div>
               <div class="invisible-on-mobile">
                 <button v-if="activeRecipeIngredients.length" @click="flipEditIngredientsForm"
@@ -100,7 +100,7 @@
                 </div>
               </div>
             </div>
-            <div v-else-if="addingIngredients && !editingIngredients" class="d-flex mb-3 row">
+            <div v-else-if="addingIngredients && !editingIngredients" class="d-flex mb-3 row p-2">
               <div class="col-5">
                 <label for="name" class="form-label">
                   <p class="serif-font mb-0">Name of Ingredient</p>
@@ -118,7 +118,7 @@
             </div>
             <div v-else>
               <form @submit.prevent="editIngredients()" id="edit-ingredients">
-                <div class="row">
+                <div class="row p-2 p-md-0">
                   <div class="col-5">
                     <label for="name" class="form-label">
                       <p class="serif-font mb-0">Name of Ingredient</p>
