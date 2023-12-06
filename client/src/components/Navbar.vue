@@ -1,13 +1,19 @@
 <template>
   <!-- //fixed-top to the navbar -->
   <nav class="navbar-expand-sm position-relative">
-    <div class="position-login d-flex align-items-center justify-content-end">
-      <div class="me-3 me-md-5">
+    <div class="d-flex align-items-center justify-content-end"
+      :class="route.name != 'Account' ? 'position-login' : 'position-account-login'">
+      <div v-if="route.name != 'Account'" class="me-3 me-md-5">
         <form class="d-flex align-items-center position-relative">
           <input type="test" class="form-control" id="searchbar" aria-describedby="searchBar" placeholder="Search..."
             minlength="1" maxlength="50">
           <p class="fs-3"><i class="mdi mdi-magnify search-position" role="button" type="submit"></i></p>
         </form>
+      </div>
+      <div v-else>
+        <router-link :to="{ name: 'Home' }">
+          <p class="fs-3 serif-font text-theme-green me-5 mb-0">Home</p>
+        </router-link>
       </div>
       <!-- <button class="btn text-dark" @click="toggleTheme"><i class="mdi"
           :class="theme == 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"></i></button> -->
@@ -33,11 +39,13 @@ import { onMounted, ref, computed } from 'vue';
 import { loadState, saveState } from '../utils/Store.js';
 import Login from './Login.vue';
 import { recipesService } from '../services/RecipesService.js';
+import { useRoute } from "vue-router";
 
 export default {
   setup() {
     let wantsFavorites = ref(AppState.wantsFavorites)
     let wantsMyRecipes = ref(AppState.wantsMyRecipes)
+    const route = useRoute();
 
     const theme = ref(loadState('theme') || 'light')
 
@@ -46,6 +54,7 @@ export default {
     })
 
     return {
+      route,
       wantsFavorites,
       wantsMyRecipes,
       account: computed(() => AppState.account),
@@ -87,6 +96,12 @@ export default {
 .position-login {
   position: absolute;
   left: 70%;
+  top: 5%;
+}
+
+.position-account-login {
+  position: absolute;
+  left: 85%;
   top: 5%;
 }
 

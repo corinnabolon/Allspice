@@ -33,6 +33,7 @@ import { Modal } from "bootstrap";
 import { accountService } from "../services/AccountService.js";
 import { logger } from "../utils/Logger.js";
 
+
 export default {
   setup() {
     let editable = ref({})
@@ -40,11 +41,9 @@ export default {
     onMounted(() => {
       let editProfileComponentElem = document.getElementById('editProfileComponent')
       editProfileComponentElem.addEventListener('show.bs.modal', function (event) {
-        logger.log("Triggered")
         editable.value = JSON.parse(JSON.stringify(AppState.account));
       })
       editProfileComponentElem.addEventListener('hidden.bs.modal', function (event) {
-        logger.log("Triggered")
         editable.value = JSON.parse(JSON.stringify(AppState.account));
       })
       editable.value = JSON.parse(JSON.stringify(AppState.account));
