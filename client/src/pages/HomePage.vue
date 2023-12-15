@@ -229,7 +229,7 @@ export default {
 }
 
 .large-margin-top {
-  margin-top: 6rem;
+  margin-top: 12rem;
 }
 
 .position-login {
