@@ -5,4 +5,4 @@ services:
     env_file:
       - allspice-env
     ports:
-      - "7045:80"
+      - "7046:80"
