@@ -145,7 +145,9 @@
           </div>
           <div v-if="addingIngredients" class="d-flex">
             <button @click="flipIngredientTextarea" class="btn btn-theme-orange me-2">Finished</button>
-            <button @click="addIngredient" class="btn btn-theme-green fs-5">Add Ingredient</button>
+            <button @click="addIngredient" class="btn btn-theme-green fs-5"
+              :class="editableIngredient.name == '' || editableIngredient.quantity == '' ? 'disabled' : ''">Add
+              Ingredient</button>
           </div>
           <div v-else-if="editingIngredients" class="d-flex">
             <button @click="reloadEditableIngredients" class="btn btn-theme-orange p-2 me-3 me-md-1">Cancel
@@ -176,7 +178,7 @@ export default {
     let addingIngredients = ref(false);
     let editingIngredients = ref(false);
     let editableInstructions = ref("")
-    let editableIngredient = ref({})
+    let editableIngredient = ref({ name: "", quantity: "" })
     let editableIngredients = ref([])
 
     onMounted(() => {
@@ -228,6 +230,7 @@ export default {
 
       flipIngredientTextarea() {
         addingIngredients.value = !addingIngredients.value;
+        editableIngredient.value = { name: "", quantity: "" };
       },
 
       flipEditIngredientsForm() {
@@ -263,7 +266,7 @@ export default {
         try {
           let ingredient = editableIngredient.value
           await ingredientsService.addIngredient(ingredient)
-          editableIngredient.value = {}
+          editableIngredient.value = ({ name: "", quantity: "" })
           Pop.success("Ingredient added!")
         } catch (error) {
           Pop.error(error)

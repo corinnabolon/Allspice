@@ -6,7 +6,7 @@
       <div v-if="route.name != 'Account'" class="me-3 me-md-5">
         <form @submit.prevent="searchRecipeByCategory" class="d-flex align-items-center position-relative">
           <input v-model="editable" title="Search recipe by category" type="text" class="form-control" id="searchbar"
-            aria-describedby="searchBar" placeholder="Search..." minlength="1" maxlength="50">
+            aria-describedby="searchBar" placeholder="Search by category..." minlength="1" maxlength="50">
           <button class="fs-3" title="Search recipe by category"><i class="mdi mdi-magnify search-position" role="button"
               type="submit"></i></button>
         </form>

@@ -12,6 +12,7 @@ class RecipesService {
   }
 
   setActiveRecipe(recipeId) {
+    this.clearAppState()
     AppState.activeRecipe = AppState.recipes.find(recipe => recipe.id == recipeId)
     this.findIngredients()
   }
@@ -23,6 +24,8 @@ class RecipesService {
   }
 
   async createRecipe(recipeData) {
+    AppState.activeRecipe = null
+    AppState.activeRecipeIngredients.length = 0
     const res = await api.post("api/recipes", recipeData)
     let newRecipe = new Recipe(res.data)
     AppState.recipes.push(newRecipe)
