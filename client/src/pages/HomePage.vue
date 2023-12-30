@@ -3,13 +3,15 @@
     <section class="row navbar-coverImg">
       <div class="col-12">
         <section class="row">
-          <div class="col-md-2"></div>
-          <div class="col-6 col-md-4 serif-font font-beige text-shadow pb-4 mt-5 mb-md-2">
-            <p class="fs-1">All-Spice</p>
-            <p class="fs-2">Cherish your family</p>
-            <p class="fs-2">And their cooking</p>
+          <div class="col-md-1"></div>
+          <div class="col-12 col-md-4 serif-font font-beige text-shadow pb-4 mt-5 mt-md-2 mb-md-2">
+            <img src="../assets/img/AllSpiceTitle.png" alt="AllSpice Logo" class="logo">
+            <div class="d-flex justify-content-between d-md-block">
+              <p class="fs-2 mb-0 ms-4 ms-md-0">Cherish your family</p>
+              <p class="fs-2">And their cooking</p>
+            </div>
           </div>
-          <div class="col-2 col-md-4"></div>
+          <div class="col-2 col-md-5"></div>
           <div class="col-4 col-md-2 d-flex align-items-end justify-content-end">
             <div v-if="account.id">
               <button data-bs-toggle="modal" data-bs-target="#createRecipeModal"
@@ -106,6 +108,10 @@ export default {
 
     onMounted(() => {
       getRecipes();
+      // let recipeCardModalElem = document.getElementById('recipeCardModal')
+      // recipeCardModalElem.addEventListener('show.bs.modal', function (event) {
+      //   recipesService.clearAppState();
+      // })
     })
 
 
@@ -202,13 +208,13 @@ export default {
   background-color: whitesmoke;
   border-radius: 1rem;
   box-shadow: 5px 5px 5px gray;
-  top: -1rem;
+  top: -2rem;
 }
 
 .not-logged-in-link-box {
   position: absolute;
   height: 20vh;
-  width: 20vw;
+  width: 50vw;
   background-color: whitesmoke;
   border-radius: 1rem;
   box-shadow: 5px 5px 5px gray;
@@ -230,6 +236,10 @@ export default {
 
 .large-margin-top {
   margin-top: 12rem;
+}
+
+.logo {
+  height: 10rem;
 }
 
 .position-login {
