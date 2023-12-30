@@ -25,7 +25,7 @@
         <div class="col-12 col-md-5 px-3">
           <p class="serif-font fs-4">Recipe Instructions</p>
           <div v-if="!addingInstructions">
-            <p class="serif-font">{{ activeRecipe.instructions }}</p>
+            <p class="serif-font line-breaks">{{ activeRecipe.instructions }}</p>
             <div class="col-12 col-md-5 mt-2 mt-md-0 px-md-3 invisible-on-desktop align-items-end">
               <div v-if="account.id == activeRecipe.creatorId">
                 <button v-if="!addingInstructions && !editableInstructions" @click="flipInstructionTextarea"

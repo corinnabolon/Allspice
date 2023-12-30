@@ -44,6 +44,14 @@ footer {
   height: 32px;
 }
 
+textarea {
+  white-space: pre-line;
+}
+
+.line-breaks {
+  white-space: pre-wrap;
+}
+
 .bg-theme-green {
   background-color: var(--theme-green);
 }
