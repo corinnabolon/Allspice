@@ -111,13 +111,14 @@ export default {
 
 .title-box {
   height: 4rem;
-  width: 18rem;
+  width: 90%;
 }
 
 @media screen and (max-width: 768px) {
   .recipeCard-coverImg {
+    width: 85%;
     height: 18rem;
-    margin: 1rem;
+    margin: .8rem, auto, .8rem, auto;
   }
 
   .position-end {

@@ -5,15 +5,15 @@
       :class="route.name != 'Account' ? 'position-login' : 'position-account-login'">
       <div v-if="route.name != 'Account'" class="me-3 me-md-5">
         <form @submit.prevent="searchRecipeByCategory" class="d-flex align-items-center position-relative">
-          <input v-model="editable" title="Search recipe by category" type="text" class="form-control" id="searchbar"
-            aria-describedby="searchBar" placeholder="Search by category..." minlength="1" maxlength="50">
+          <input v-model="editable" title="Search recipe by category" type="text" class="form-control input-position"
+            id="searchbar" aria-describedby="searchBar" placeholder="Search by category..." minlength="1" maxlength="50">
           <button class="fs-3" title="Search recipe by category"><i class="mdi mdi-magnify search-position" role="button"
               type="submit"></i></button>
         </form>
       </div>
       <div v-else>
         <router-link :to="{ name: 'Home' }">
-          <p class="fs-3 serif-font text-theme-green me-5 mb-0">Home</p>
+          <p class="fs-3 serif-font text-theme-green me-5 mx-4">Home</p>
         </router-link>
       </div>
       <!-- <button class="btn text-dark" @click="toggleTheme"><i class="mdi"
@@ -141,14 +141,28 @@ a:hover {
 }
 
 @media screen and (max-width: 768px) {
+
+  .input-position {
+    position: absolute;
+    left: -190px;
+    width: 200px;
+    z-index: 1;
+  }
+
   .search-position {
-    top: 4%;
-    left: 82%;
+    top: -13px;
+    left: -12px;
+    z-index: 1;
   }
 
   .position-login {
-    left: 40%;
+    left: 70%;
+    z-index: 2;
     top: 2%;
+  }
+
+  .position-account-login {
+    left: 70%;
   }
 }
 </style>

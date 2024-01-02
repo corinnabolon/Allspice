@@ -12,7 +12,7 @@
             </div>
           </div>
           <div class="col-2 col-md-5"></div>
-          <div class="col-4 col-md-2 d-flex align-items-end justify-content-end">
+          <div class="col-12 col-md-2 d-flex align-items-end justify-content-end">
             <div v-if="account.id">
               <button data-bs-toggle="modal" data-bs-target="#createRecipeModal"
                 class="btn btn-success btn-theme-green mb-5 mb-md-0">Create
@@ -33,7 +33,7 @@
           </div>
         </section>
 
-        <section v-if="recipes" class="row justify-content-evenly large-margin-top">
+        <section v-if="recipes" class="row justify-content-center justify-content-md-evenly large-margin-top">
           <div v-for="recipe in recipes" :key="recipe.id" class="col-12 col-md-3 m-md-2 recipe-component">
             <RecipeComponent :recipeProp="recipe" />
           </div>
@@ -272,6 +272,10 @@ export default {
   .link-box {
     height: 15vh;
     width: 90vw;
+  }
+
+  .navbar-coverImg {
+    height: 23rem;
   }
 }
 </style>
