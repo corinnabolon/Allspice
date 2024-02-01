@@ -165,4 +165,4 @@ a:hover {
     left: 70%;
   }
 }
-</style>
+</style>../Store.js
