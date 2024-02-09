@@ -49,8 +49,6 @@ export default {
       editable.value = JSON.parse(JSON.stringify(AppState.account));
     })
 
-    //TODO: onMounted reset editable to ref AppState.account
-
     return {
       editable,
 

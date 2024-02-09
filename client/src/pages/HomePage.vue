@@ -100,18 +100,12 @@ import EditProfileComponent from '../components/EditProfileComponent.vue';
 export default {
   setup() {
     let account = computed(() => AppState.account)
-    // let wantsFavorites = ref(false)
-    // let wantsMyRecipes = ref(false)
     let wantsQueried = ref(AppState.wantsQueried)
     let wantsFavorites = ref(AppState.wantsFavorites)
     let wantsMyRecipes = ref(AppState.wantsMyRecipes)
 
     onMounted(() => {
       getRecipes();
-      // let recipeCardModalElem = document.getElementById('recipeCardModal')
-      // recipeCardModalElem.addEventListener('show.bs.modal', function (event) {
-      //   recipesService.clearAppState();
-      // })
     })
 
 
@@ -147,15 +141,6 @@ export default {
 
       activeRecipe: computed(() => AppState.activeRecipe),
       activeRecipeIngredients: computed(() => AppState.activeRecipeIngredients),
-
-      // recipes: computed(() => {
-      //   if (wantsFavorites.value) {
-      //     return AppState.myFavoriteRecipes
-      //   } else if (wantsMyRecipes.value) {
-      //     return AppState.recipes.filter(recipe => recipe.creatorId == AppState.account.id)
-      //   }
-      //   return AppState.recipes
-      // }),
 
       recipes: computed(() => {
         if (AppState.wantsFavorites) {
