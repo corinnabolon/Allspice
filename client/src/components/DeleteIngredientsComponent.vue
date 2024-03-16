@@ -1,9 +1,9 @@
 <template>
   <div v-for="ingredient in activeRecipeIngredients" :key="ingredient.id">
-    <p class="fs-4"><i @click="removeIngredient(ingredient.id)" role="button" title="Delete this ingredient"
+    <p class="fs-3"><i @click="removeIngredient(ingredient.id)" role="button" title="Delete this ingredient"
         class="mdi mdi-delete"></i>{{ ingredient.quantity }} {{
-          ingredient.name
-        }}</p>
+    ingredient.name
+  }}</p>
   </div>
   <div class="text-end">
     <button class="btn btn-theme-orange" @click="goBack()" aria-label="Close">Go Back</button>
