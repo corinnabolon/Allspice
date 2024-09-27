@@ -49,7 +49,7 @@ public class FavoritesRepository
     //Get the favorites table, which is the many-to-many with just a recipeId and accountId on it
     //Get the recipe table so we can connect all of the relevant recipe data to it
     //Get the account table to we can get the recipe's creatorId
-    //Where the favorite's accountId is the user ID
+    //Where the favorite's accountId is the userID
 
     List<FavoritedRecipe> favoritedRecipes = _db.Query<Favorite, FavoritedRecipe, Profile, FavoritedRecipe>(sql, (favorite, favoritedRecipe, profile) =>
     {
